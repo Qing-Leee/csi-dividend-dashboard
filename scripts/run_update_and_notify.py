@@ -16,6 +16,7 @@
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 from datetime import datetime
@@ -25,6 +26,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 UPDATE_SCRIPT = BASE_DIR / "scripts" / "update_data.py"
 DATA_PATH = BASE_DIR / "assets" / "market_data.json"
+DEFAULT_PREVIEW_DIR = Path("/workspace/csi-dividend-dashboard-preview")
 
 
 def run_update():
@@ -64,6 +66,10 @@ def compose_summary(data):
         "DASHBOARD_PUBLIC_URL",
         "https://qing-leee.github.io/csi-dividend-dashboard/",
     ).strip()
+    preview_url = os.environ.get(
+        "DASHBOARD_PREVIEW_URL",
+        "computer:///workspace/csi-dividend-dashboard-preview/index.html",
+    ).strip()
     period = meta.get("period_label", "更新")
     update_time = meta.get("update_time") or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -86,12 +92,33 @@ def compose_summary(data):
         f"建议说明：{composite.get('detail', '--')}",
     ]
 
-    if dashboard_url:
+    if preview_url:
+        lines.extend(["", f"内置预览链接：[点击查看看板]({preview_url})"])
+    elif dashboard_url:
         lines.extend(["", f"看板链接：[点击查看看板]({dashboard_url})"])
     else:
-        lines.extend(["", "看板链接：待配置 DASHBOARD_PUBLIC_URL"])
+        lines.extend(["", "看板链接：待配置 DASHBOARD_PUBLIC_URL 或 DASHBOARD_PREVIEW_URL"])
 
     return "\n".join(lines)
+
+
+def sync_preview_folder():
+    """将最新看板同步到固定预览目录，便于返回 TRAE 内置预览链接。"""
+    preview_dir = Path(os.environ.get("DASHBOARD_PREVIEW_DIR", str(DEFAULT_PREVIEW_DIR))).resolve()
+    preview_dir.mkdir(parents=True, exist_ok=True)
+
+    for file_name in ["index.html", "csi-dividend-dca-dashboard.html"]:
+        src = BASE_DIR / file_name
+        if src.exists():
+            shutil.copy2(src, preview_dir / file_name)
+
+    for dir_name in ["assets", "_shared"]:
+        src_dir = BASE_DIR / dir_name
+        dst_dir = preview_dir / dir_name
+        if src_dir.exists():
+            shutil.copytree(src_dir, dst_dir, dirs_exist_ok=True)
+
+    print(f"[Preview] 内置预览文件已同步：{preview_dir / 'index.html'}")
 
 
 def push_to_github():
@@ -135,6 +162,7 @@ def main():
     print("中证红利定投策略看板：数据更新")
     print("=" * 60)
     run_update()
+    sync_preview_folder()
     push_to_github()
     data = load_market_data()
     summary = compose_summary(data)
