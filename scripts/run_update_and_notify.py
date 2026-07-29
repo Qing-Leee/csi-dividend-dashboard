@@ -139,6 +139,13 @@ def push_to_github():
     print("[Git] 开始推送更新到 GitHub...")
     remote_url = f"https://x-access-token:{token}@github.com/Qing-Leee/csi-dividend-dashboard.git"
 
+    setup_cmds = [
+        ["git", "config", "user.name", "Dashboard Auto Update"],
+        ["git", "config", "user.email", "dashboard-auto-update@users.noreply.github.com"],
+    ]
+    for cmd in setup_cmds:
+        subprocess.run(cmd, cwd=str(BASE_DIR), text=True, capture_output=True, timeout=30)
+
     cmds = [
         ["git", "add", "index.html", "assets/market_data.json"],
         ["git", "commit", "-m", f"chore: auto-update dashboard data {datetime.now().strftime('%Y-%m-%d %H:%M')}"],
@@ -147,10 +154,13 @@ def push_to_github():
 
     for cmd in cmds:
         result = subprocess.run(cmd, cwd=str(BASE_DIR), text=True, capture_output=True, timeout=60)
+        combined_output = result.stdout + result.stderr
         if result.stdout.strip():
             print(f"[Git] {result.stdout.strip()}")
-        if result.returncode != 0 and "nothing to commit" not in (result.stdout + result.stderr):
-            print(f"[Git] WARN: {result.stderr.strip()}")
+        if result.stderr.strip():
+            print(f"[Git] {result.stderr.strip()}", file=sys.stderr)
+        if result.returncode != 0 and "nothing to commit" not in combined_output:
+            raise RuntimeError(f"Git 操作失败：{' '.join(cmd[:2])}")
     print("[Git] 推送完成")
 
 
