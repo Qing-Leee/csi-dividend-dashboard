@@ -87,7 +87,7 @@ def compose_summary(data):
     ]
 
     if dashboard_url:
-        lines.extend(["", f"看板链接：{dashboard_url}"])
+        lines.extend(["", f"看板链接：[点击查看看板]({dashboard_url})"])
     else:
         lines.extend(["", "看板链接：待配置 DASHBOARD_PUBLIC_URL"])
 
