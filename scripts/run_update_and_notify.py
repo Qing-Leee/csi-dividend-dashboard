@@ -99,7 +99,7 @@ def compose_message(data):
 
 def send_feishu_message(message):
     chat_id = os.environ.get("FEISHU_CHAT_ID", "").strip()
-    user_id = os.environ.get("FEISHU_USER_ID", "").strip()
+    user_id = os.environ.get("FEISHU_USER_ID", "ou_708e2ec56f21772a6caab9cbe1c4d364").strip()
 
     if not chat_id and not user_id:
         print("[Feishu] 未配置 FEISHU_CHAT_ID 或 FEISHU_USER_ID，跳过通知")
@@ -107,7 +107,7 @@ def send_feishu_message(message):
         print(message)
         return
 
-    cmd = ["lark-cli", "im", "+messages-send", "--as", "bot", "--text", message]
+    cmd = ["lark-cli", "im", "+messages-send", "--as", "user", "--text", message]
     if chat_id:
         cmd.extend(["--chat-id", chat_id])
     else:
