@@ -40,7 +40,49 @@
 
   function formatDate(d) {
     if (!d) return '';
-    return d.substring(5);
+    var s = String(d);
+    if (/^\d{8}$/.test(s)) return s.substring(4, 6) + '-' + s.substring(6, 8);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s.substring(5);
+    return s;
+  }
+
+  function formatNumber(value, digits) {
+    if (value == null || value === '' || isNaN(Number(value))) return '--';
+    return Number(value).toLocaleString(undefined, {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    });
+  }
+
+  function axisTooltip(unitMap, digitMap) {
+    return {
+      trigger: 'axis',
+      confine: true,
+      appendToBody: false,
+      axisPointer: { type: 'cross' },
+      backgroundColor: 'rgba(255,255,255,0.96)',
+      borderColor: rule,
+      borderWidth: 1,
+      textStyle: { color: ink, fontSize: 12 },
+      extraCssText: 'box-shadow:0 8px 24px rgba(15,23,42,.12);border-radius:8px;padding:8px 10px;',
+      formatter: function(params) {
+        if (!params || !params.length) return '';
+        var lines = ['<div style="font-weight:700;margin-bottom:4px;">' + params[0].axisValue + '</div>'];
+        params.forEach(function(p) {
+          var unit = unitMap && unitMap[p.seriesName] ? unitMap[p.seriesName] : '';
+          var digits = digitMap && digitMap[p.seriesName] != null ? digitMap[p.seriesName] : 2;
+          var value = formatNumber(p.value, digits);
+          lines.push(
+            '<div style="display:flex;align-items:center;gap:6px;white-space:nowrap;">' +
+              '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + p.color + ';"></span>' +
+              '<span>' + p.seriesName + '：</span>' +
+              '<strong>' + value + unit + '</strong>' +
+            '</div>'
+          );
+        });
+        return lines.join('');
+      }
+    };
   }
 
   function extractArray(records, key, fallback) {
@@ -193,7 +235,7 @@
     var chart1 = echarts.init(document.getElementById('chart-investment-timeline'), null, { renderer: 'svg' });
     chart1.setOption({
       animation: false,
-      tooltip: { trigger: 'axis', appendToBody: true, axisPointer: { type: 'cross' } },
+      tooltip: axisTooltip({ '定投金额': ' 元', '指数点位': ' 点' }, { '定投金额': 0, '指数点位': 2 }),
       legend: { data: ['定投金额', '指数点位'], textStyle: { color: muted, fontSize: 11 }, top: 0 },
       grid: commonGrid,
       xAxis: {
@@ -264,7 +306,7 @@
     var chart2 = echarts.init(document.getElementById('chart-cumulative'), null, { renderer: 'svg' });
     chart2.setOption({
       animation: false,
-      tooltip: { trigger: 'axis', appendToBody: true, axisPointer: { type: 'cross' } },
+      tooltip: axisTooltip({ '累计投入': ' 元', '持有市值': ' 元', '浮盈': ' 元' }, { '累计投入': 0, '持有市值': 2, '浮盈': 2 }),
       legend: { data: ['累计投入', '持有市值', '浮盈'], textStyle: { color: muted, fontSize: 11 }, top: 0 },
       grid: commonGrid,
       xAxis: {
@@ -490,7 +532,7 @@
     var chartPEDiv = echarts.init(document.getElementById('chart-pe-div-trend'), null, { renderer: 'svg' });
     chartPEDiv.setOption({
       animation: false,
-      tooltip: { trigger: 'axis', appendToBody: true, axisPointer: { type: 'cross' } },
+      tooltip: axisTooltip({ 'P/E2': '', 'D/P2': '%' }, { 'P/E2': 2, 'D/P2': 2 }),
       legend: { data: ['P/E2', 'D/P2'], textStyle: { color: muted, fontSize: 11 }, top: 0 },
       grid: commonGrid,
       xAxis: { type: 'category', data: peDivDates, axisLabel: commonAxisLabel, axisLine: commonAxisLine },
@@ -534,7 +576,7 @@
     var chartSB = echarts.init(document.getElementById('chart-stock-bond'), null, { renderer: 'svg' });
     chartSB.setOption({
       animation: false,
-      tooltip: { trigger: 'axis', appendToBody: true, axisPointer: { type: 'cross' } },
+      tooltip: axisTooltip({ 'D/P2': '%', '10年期国债': '%', '股债利差': '%' }, { 'D/P2': 2, '10年期国债': 3, '股债利差': 2 }),
       legend: { data: ['D/P2', '10年期国债', '股债利差'], textStyle: { color: muted, fontSize: 11 }, top: 0 },
       grid: commonGrid,
       xAxis: { type: 'category', data: stockBondDates, axisLabel: commonAxisLabel, axisLine: commonAxisLine },
@@ -557,7 +599,7 @@
     var chartRSI = echarts.init(document.getElementById('chart-rsi-detail'), null, { renderer: 'svg' });
     chartRSI.setOption({
       animation: false,
-      tooltip: { trigger: 'axis', appendToBody: true },
+      tooltip: axisTooltip({ 'RSI24': '' }, { 'RSI24': 2 }),
       grid: commonGrid,
       xAxis: { type: 'category', data: rsiTrendDates, axisLabel: commonAxisLabel, axisLine: commonAxisLine },
       yAxis: { type: 'value', name: 'RSI24', min: 0, max: 100, axisLabel: commonAxisLabel, axisLine: commonAxisLine, splitLine: commonSplitLine },

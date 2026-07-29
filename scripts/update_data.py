@@ -131,37 +131,39 @@ def fetch_csi_valuation(code="000922"):
         if div2_col is None:
             div2_col = 6
         
-        # 读取最近的数据行（最后一行是最新）
-        last_row = ws.nrows - 1
-        date_val = str(ws.cell_value(last_row, date_col)).strip()
-        # 处理日期格式
-        try:
-            if isinstance(ws.cell_value(last_row, date_col), float):
-                date_tuple = xlrd.xldate_as_tuple(ws.cell_value(last_row, date_col), wb.datemode)
-                date_val = f"{date_tuple[0]:04d}-{date_tuple[1]:02d}-{date_tuple[2]:02d}"
-        except:
-            pass
-        
-        pe2_val = float(ws.cell_value(last_row, pe2_col))
-        div_yield2_val = float(ws.cell_value(last_row, div2_col))
-        
-        # 读取历史数据（最近30天）
-        history = []
-        start_row = max(1, last_row - 30)
-        for r in range(start_row, last_row + 1):
+        def normalize_date(cell_value):
+            raw_date = str(cell_value).strip()
             try:
-                d = str(ws.cell_value(r, date_col)).strip()
-                try:
-                    if isinstance(ws.cell_value(r, date_col), float):
-                        dt = xlrd.xldate_as_tuple(ws.cell_value(r, date_col), wb.datemode)
-                        d = f"{dt[0]:04d}-{dt[1]:02d}-{dt[2]:02d}"
-                except:
-                    pass
+                if isinstance(cell_value, float):
+                    dt = xlrd.xldate_as_tuple(cell_value, wb.datemode)
+                    return f"{dt[0]:04d}-{dt[1]:02d}-{dt[2]:02d}"
+            except Exception:
+                pass
+            if len(raw_date) == 8 and raw_date.isdigit():
+                return f"{raw_date[:4]}-{raw_date[4:6]}-{raw_date[6:8]}"
+            return raw_date
+
+        # 中证估值文件通常按日期倒序排列，不能假设最后一行是最新。
+        # 逐行解析后按日期排序，取日期最大的一行作为最新值。
+        parsed_rows = []
+        for r in range(1, ws.nrows):
+            try:
+                d = normalize_date(ws.cell_value(r, date_col))
                 pe = float(ws.cell_value(r, pe2_col))
                 dv = float(ws.cell_value(r, div2_col))
-                history.append({"date": d, "pe2": pe, "div_yield2": dv})
-            except:
+                parsed_rows.append({"date": d, "pe2": pe, "div_yield2": dv})
+            except Exception:
                 continue
+
+        if not parsed_rows:
+            raise ValueError("中证估值Excel未解析到有效数据行")
+
+        parsed_rows.sort(key=lambda row: row["date"])
+        latest = parsed_rows[-1]
+        pe2_val = latest["pe2"]
+        div_yield2_val = latest["div_yield2"]
+        date_val = latest["date"]
+        history = parsed_rows[-30:]
         
         result = {
             "pe2": pe2_val,
