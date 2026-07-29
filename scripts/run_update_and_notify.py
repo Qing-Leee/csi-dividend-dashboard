@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 """
-中证红利定投策略看板：更新数据并推送飞书机器人通知。
+中证红利定投策略看板：更新数据并输出小结。
 
 使用方式：
-1. 先配置环境变量：
+1. 配置环境变量（可选）：
    - DASHBOARD_PUBLIC_URL：稳定看板链接
-   - FEISHU_CHAT_ID：飞书群 chat_id，形如 oc_xxx
-   或：
-   - FEISHU_USER_ID：飞书用户 open_id，形如 ou_xxx
 2. 在项目根目录运行：
    python3 scripts/run_update_and_notify.py
 
 说明：
 - 不创建新的交付物。
 - 只更新固定看板入口 index.html 和 assets/market_data.json。
-- 如果未配置 FEISHU_CHAT_ID / FEISHU_USER_ID，则跳过飞书通知。
+- 运行完成后输出数据小结和看板链接，可直接点击查看。
 """
 
 import json
@@ -55,7 +52,7 @@ def latest_record(data):
     return records[-1] if records else {}
 
 
-def compose_message(data):
+def compose_summary(data):
     meta = data.get("meta") or {}
     valuation = (data.get("index_valuation") or {}).get("csi_dividend") or {}
     technical = data.get("technical") or {}
@@ -90,42 +87,11 @@ def compose_message(data):
     ]
 
     if dashboard_url:
-        lines.extend(["", f"查看看板：{dashboard_url}"])
+        lines.extend(["", f"看板链接：{dashboard_url}"])
     else:
-        lines.extend(["", "查看看板：待配置稳定站点链接"])
+        lines.extend(["", "看板链接：待配置 DASHBOARD_PUBLIC_URL"])
 
     return "\n".join(lines)
-
-
-def send_feishu_message(message):
-    chat_id = os.environ.get("FEISHU_CHAT_ID", "").strip()
-    user_id = os.environ.get("FEISHU_USER_ID", "ou_708e2ec56f21772a6caab9cbe1c4d364").strip()
-
-    if not chat_id and not user_id:
-        print("[Feishu] 未配置 FEISHU_CHAT_ID 或 FEISHU_USER_ID，跳过通知")
-        print("[Feishu] 消息预览：")
-        print(message)
-        return
-
-    cmd = ["lark-cli", "im", "+messages-send", "--as", "user", "--text", message]
-    if chat_id:
-        cmd.extend(["--chat-id", chat_id])
-    else:
-        cmd.extend(["--user-id", user_id])
-
-    result = subprocess.run(
-        cmd,
-        text=True,
-        capture_output=True,
-        timeout=60,
-    )
-    if result.stdout:
-        print(result.stdout)
-    if result.stderr:
-        print(result.stderr, file=sys.stderr)
-    if result.returncode != 0:
-        raise RuntimeError(f"飞书通知发送失败，退出码：{result.returncode}")
-    print("[Feishu] 通知已发送")
 
 
 def push_to_github():
@@ -166,15 +132,16 @@ def push_to_github():
 
 def main():
     print("=" * 60)
-    print("中证红利定投策略看板：更新 + 飞书通知")
+    print("中证红利定投策略看板：数据更新")
     print("=" * 60)
     run_update()
     push_to_github()
     data = load_market_data()
-    message = compose_message(data)
-    send_feishu_message(message)
+    summary = compose_summary(data)
     print("=" * 60)
-    print("[DONE] 固定看板已更新并推送")
+    print(summary)
+    print("=" * 60)
+    print("[DONE] 固定看板已更新")
     print("=" * 60)
 
 
