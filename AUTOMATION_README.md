@@ -68,7 +68,7 @@ export FEISHU_USER_ID="ou_xxx"
 稳定看板链接：
 
 ```bash
-export DASHBOARD_PUBLIC_URL="https://your-stable-dashboard-url"
+export DASHBOARD_PUBLIC_URL="https://qing-leee.github.io/csi-dividend-dashboard/"
 ```
 
 如果没有配置 `FEISHU_CHAT_ID` 或 `FEISHU_USER_ID`，脚本只会更新页面并打印消息预览，不会发送飞书通知。
@@ -94,17 +94,14 @@ export DASHBOARD_PUBLIC_URL="https://your-stable-dashboard-url"
 
 “静态站点”就是一个固定网址，用来放 `index.html`。
 
-目前本目录已经具备静态站点文件结构，但还没有公网托管位置。
+目前本目录已部署到 GitHub Pages：
 
-后续可接入任一托管方式：
+```text
+https://qing-leee.github.io/csi-dividend-dashboard/
+```
 
-- GitHub Pages
-- Vercel
-- Netlify
-- OSS/COS/S3 静态网站
-- 公司内部静态服务器
-
-接入后，只要让自动化任务覆盖同一个 `index.html` 和 `assets/market_data.json`，用户打开同一个链接就会看到最新数据。
+自动化任务运行后，脚本会自动将更新的 index.html 和 market_data.json 推送到 GitHub，
+GitHub Pages 会在约 1-2 分钟后刷新。
 
 ## 重要约束
 

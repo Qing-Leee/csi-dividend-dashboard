@@ -63,7 +63,10 @@ def compose_message(data):
     composite = strategy.get("composite_advice") or {}
     record = latest_record(data)
 
-    dashboard_url = os.environ.get("DASHBOARD_PUBLIC_URL", "").strip()
+    dashboard_url = os.environ.get(
+        "DASHBOARD_PUBLIC_URL",
+        "https://qing-leee.github.io/csi-dividend-dashboard/",
+    ).strip()
     period = meta.get("period_label", "更新")
     update_time = meta.get("update_time") or datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -125,16 +128,43 @@ def send_feishu_message(message):
     print("[Feishu] 通知已发送")
 
 
+def push_to_github():
+    """将更新后的 index.html 和 market_data.json 推送到 GitHub Pages"""
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    if not token:
+        print("[Git] 未配置 GITHUB_TOKEN 环境变量，跳过推送")
+        print("[Git] 请设置: export GITHUB_TOKEN='ghp_xxx'")
+        return
+
+    print("[Git] 开始推送更新到 GitHub...")
+    remote_url = f"https://x-access-token:{token}@github.com/Qing-Leee/csi-dividend-dashboard.git"
+
+    cmds = [
+        ["git", "add", "index.html", "assets/market_data.json"],
+        ["git", "commit", "-m", f"chore: auto-update dashboard data {datetime.now().strftime('%Y-%m-%d %H:%M')}"],
+        ["git", "push", remote_url, "main"],
+    ]
+
+    for cmd in cmds:
+        result = subprocess.run(cmd, cwd=str(BASE_DIR), text=True, capture_output=True, timeout=60)
+        if result.stdout.strip():
+            print(f"[Git] {result.stdout.strip()}")
+        if result.returncode != 0 and "nothing to commit" not in (result.stdout + result.stderr):
+            print(f"[Git] WARN: {result.stderr.strip()}")
+    print("[Git] 推送完成")
+
+
 def main():
     print("=" * 60)
     print("中证红利定投策略看板：更新 + 飞书通知")
     print("=" * 60)
     run_update()
+    push_to_github()
     data = load_market_data()
     message = compose_message(data)
     send_feishu_message(message)
     print("=" * 60)
-    print("[DONE] 固定看板已更新")
+    print("[DONE] 固定看板已更新并推送")
     print("=" * 60)
 
 
