@@ -1,7 +1,7 @@
 {
   "meta": {
-    "update_time": "2026-07-29 11:56:49",
-    "period_label": "盘中",
+    "update_time": "2026-07-29 08:13:51",
+    "period_label": "盘前",
     "is_trading_day": true,
     "data_sources": {
       "internal": {
@@ -35,23 +35,23 @@
     },
     "update_schedule": "每日 08:00(盘前) / 14:30(盘中) 自动更新",
     "next_update": "14:30 盘中版（收盘前策略信号）",
-    "market_date": "2026-07-28",
+    "market_date": "20260701",
     "valuation_policy": "中证官网指数估值Excel，计算使用P/E2与D/P2",
-    "display_policy": "外部公开数据统一展示至2026-07-28，避免盘中实时波动"
+    "display_policy": "外部公开数据统一展示至20260701，避免盘中实时波动"
   },
   "index_spot": {
     "csi_dividend": {
       "name": "中证红利",
       "code": "000922",
-      "date": "2026-07-28",
-      "latest": 5437.92,
-      "change_pct": 0.07,
-      "change_amt": 3.92,
-      "volume": 61713590,
-      "amount": 62497401131.0,
-      "high": 5442.49,
-      "low": 5365.28,
-      "open": 5407.22,
+      "date": "2026-07-29",
+      "latest": 5519.12,
+      "change_pct": 0,
+      "change_amt": 1.79,
+      "volume": 63222536,
+      "amount": 66420296380.0,
+      "high": 5536.9,
+      "low": 5439.82,
+      "open": 5442.35,
       "source": "东方财富历史行情",
       "source_url": "https://quote.eastmoney.com/"
     }
@@ -65,125 +65,1146 @@
       "policy": "仅用于页面中的指数点位走势；飞书复盘记录不混入外部市场字段",
       "data": [
         {
+          "date": "2026-03-02",
+          "open": 5866.5,
+          "close": 5905.25,
+          "high": 5909.32,
+          "low": 5809.29,
+          "volume": 99491311,
+          "amount": 111700391573.0,
+          "change_pct": 0,
+          "change_amt": 1.72
+        },
+        {
+          "date": "2026-03-03",
+          "open": 5918.27,
+          "close": 5952.09,
+          "high": 6015.88,
+          "low": 5882.52,
+          "volume": 134005953,
+          "amount": 150923050102.0,
+          "change_pct": 0,
+          "change_amt": 2.26
+        },
+        {
+          "date": "2026-03-04",
+          "open": 5905.63,
+          "close": 5856.15,
+          "high": 5905.63,
+          "low": 5809.96,
+          "volume": 114247001,
+          "amount": 126274897850.0,
+          "change_pct": 0,
+          "change_amt": 1.61
+        },
+        {
+          "date": "2026-03-05",
+          "open": 5850.89,
+          "close": 5849.52,
+          "high": 5880.3,
+          "low": 5800.97,
+          "volume": 76293782,
+          "amount": 86990839307.0,
+          "change_pct": 0,
+          "change_amt": 1.35
+        },
+        {
+          "date": "2026-03-06",
+          "open": 5817.1,
+          "close": 5860.51,
+          "high": 5870.94,
+          "low": 5791.65,
+          "volume": 62427308,
+          "amount": 70415400935.0,
+          "change_pct": 0,
+          "change_amt": 1.36
+        },
+        {
+          "date": "2026-03-09",
+          "open": 5929.21,
+          "close": 5864.51,
+          "high": 5947.37,
+          "low": 5860.59,
+          "volume": 99236205,
+          "amount": 118144758361.0,
+          "change_pct": 0,
+          "change_amt": 1.48
+        },
+        {
+          "date": "2026-03-10",
+          "open": 5794.59,
+          "close": 5820.49,
+          "high": 5836.81,
+          "low": 5794.59,
+          "volume": 69982660,
+          "amount": 75617831840.0,
+          "change_pct": 0,
+          "change_amt": 0.72
+        },
+        {
+          "date": "2026-03-11",
+          "open": 5811.09,
+          "close": 5905.18,
+          "high": 5911.68,
+          "low": 5787.75,
+          "volume": 69619268,
+          "amount": 74518094031.0,
+          "change_pct": 0,
+          "change_amt": 2.13
+        },
+        {
+          "date": "2026-03-12",
+          "open": 5930.47,
+          "close": 5976.53,
+          "high": 6003.84,
+          "low": 5893.54,
+          "volume": 75699866,
+          "amount": 84666831060.0,
+          "change_pct": 0,
+          "change_amt": 1.87
+        },
+        {
+          "date": "2026-03-13",
+          "open": 5977.91,
+          "close": 5954.46,
+          "high": 6023.1,
+          "low": 5940.63,
+          "volume": 75103246,
+          "amount": 83724991732.0,
+          "change_pct": 0,
+          "change_amt": 1.38
+        },
+        {
+          "date": "2026-03-16",
+          "open": 5962.73,
+          "close": 5912.37,
+          "high": 5978.19,
+          "low": 5894.52,
+          "volume": 63245312,
+          "amount": 74781662166.0,
+          "change_pct": 0,
+          "change_amt": 1.41
+        },
+        {
+          "date": "2026-03-17",
+          "open": 5899.91,
+          "close": 5868.48,
+          "high": 5946.23,
+          "low": 5867.84,
+          "volume": 65570255,
+          "amount": 73554010905.0,
+          "change_pct": 0,
+          "change_amt": 1.33
+        },
+        {
+          "date": "2026-03-18",
+          "open": 5864.59,
+          "close": 5833.4,
+          "high": 5869.6,
+          "low": 5780.82,
+          "volume": 62665744,
+          "amount": 64857789046.0,
+          "change_pct": 0,
+          "change_amt": 1.51
+        },
+        {
+          "date": "2026-03-19",
+          "open": 5836.46,
+          "close": 5799.19,
+          "high": 5860.29,
+          "low": 5785.14,
+          "volume": 70872014,
+          "amount": 80578658660.0,
+          "change_pct": 0,
+          "change_amt": 1.29
+        },
+        {
+          "date": "2026-03-20",
+          "open": 5772.32,
+          "close": 5772.65,
+          "high": 5839.02,
+          "low": 5768.49,
+          "volume": 63478356,
+          "amount": 69841331960.0,
+          "change_pct": 0,
+          "change_amt": 1.22
+        },
+        {
+          "date": "2026-03-23",
+          "open": 5757.88,
+          "close": 5626.12,
+          "high": 5759.51,
+          "low": 5600.63,
+          "volume": 95690699,
+          "amount": 100840433589.0,
+          "change_pct": 0,
+          "change_amt": 2.75
+        },
+        {
+          "date": "2026-03-24",
+          "open": 5642.77,
+          "close": 5712.79,
+          "high": 5712.79,
+          "low": 5618.92,
+          "volume": 66155188,
+          "amount": 73170564134.0,
+          "change_pct": 0,
+          "change_amt": 1.67
+        },
+        {
+          "date": "2026-03-25",
+          "open": 5694.0,
+          "close": 5726.78,
+          "high": 5731.54,
+          "low": 5644.38,
+          "volume": 63662249,
+          "amount": 70237526634.0,
+          "change_pct": 0,
+          "change_amt": 1.53
+        },
+        {
+          "date": "2026-03-26",
+          "open": 5718.19,
+          "close": 5729.34,
+          "high": 5775.66,
+          "low": 5716.6,
+          "volume": 54394212,
+          "amount": 60543183717.0,
+          "change_pct": 0,
+          "change_amt": 1.03
+        },
+        {
+          "date": "2026-03-27",
+          "open": 5698.35,
+          "close": 5742.45,
+          "high": 5765.26,
+          "low": 5695.06,
+          "volume": 48285696,
+          "amount": 53829102553.0,
+          "change_pct": 0,
+          "change_amt": 1.23
+        },
+        {
+          "date": "2026-03-30",
+          "open": 5741.85,
+          "close": 5795.51,
+          "high": 5801.46,
+          "low": 5734.41,
+          "volume": 56944175,
+          "amount": 63672206892.0,
+          "change_pct": 0,
+          "change_amt": 1.17
+        },
+        {
+          "date": "2026-03-31",
+          "open": 5790.48,
+          "close": 5727.85,
+          "high": 5830.65,
+          "low": 5727.85,
+          "volume": 73299122,
+          "amount": 72407421022.0,
+          "change_pct": 0,
+          "change_amt": 1.77
+        },
+        {
+          "date": "2026-04-01",
+          "open": 5746.9,
+          "close": 5731.25,
+          "high": 5768.63,
+          "low": 5725.4,
+          "volume": 60302556,
+          "amount": 63984420633.0,
+          "change_pct": 0,
+          "change_amt": 0.75
+        },
+        {
+          "date": "2026-04-02",
+          "open": 5730.4,
+          "close": 5744.64,
+          "high": 5768.65,
+          "low": 5716.78,
+          "volume": 53932198,
+          "amount": 55087004269.0,
+          "change_pct": 0,
+          "change_amt": 0.91
+        },
+        {
+          "date": "2026-04-03",
+          "open": 5746.1,
+          "close": 5649.43,
+          "high": 5746.22,
+          "low": 5638.33,
+          "volume": 45174447,
+          "amount": 44474161440.0,
+          "change_pct": 0,
+          "change_amt": 1.88
+        },
+        {
+          "date": "2026-04-07",
+          "open": 5654.97,
+          "close": 5677.98,
+          "high": 5682.28,
+          "low": 5630.98,
+          "volume": 46483759,
+          "amount": 48004495458.0,
+          "change_pct": 0,
+          "change_amt": 0.91
+        },
+        {
+          "date": "2026-04-08",
+          "open": 5656.79,
+          "close": 5723.65,
+          "high": 5724.75,
+          "low": 5646.33,
+          "volume": 65084973,
+          "amount": 73916856350.0,
+          "change_pct": 0,
+          "change_amt": 1.38
+        },
+        {
+          "date": "2026-04-09",
+          "open": 5702.96,
+          "close": 5680.34,
+          "high": 5719.04,
+          "low": 5674.86,
+          "volume": 42047227,
+          "amount": 47048182456.0,
+          "change_pct": 0,
+          "change_amt": 0.77
+        },
+        {
+          "date": "2026-04-10",
+          "open": 5694.25,
+          "close": 5692.53,
+          "high": 5718.11,
+          "low": 5674.68,
+          "volume": 38830985,
+          "amount": 44860344163.0,
+          "change_pct": 0,
+          "change_amt": 0.76
+        },
+        {
+          "date": "2026-04-13",
+          "open": 5699.72,
+          "close": 5688.09,
+          "high": 5704.87,
+          "low": 5658.41,
+          "volume": 41490360,
+          "amount": 48374613226.0,
+          "change_pct": 0,
+          "change_amt": 0.82
+        },
+        {
+          "date": "2026-04-14",
+          "open": 5687.35,
+          "close": 5700.24,
+          "high": 5700.47,
+          "low": 5658.28,
+          "volume": 41760605,
+          "amount": 47669879340.0,
+          "change_pct": 0,
+          "change_amt": 0.74
+        },
+        {
+          "date": "2026-04-15",
+          "open": 5699.03,
+          "close": 5720.59,
+          "high": 5730.45,
+          "low": 5680.93,
+          "volume": 46702356,
+          "amount": 53221639036.0,
+          "change_pct": 0,
+          "change_amt": 0.87
+        },
+        {
+          "date": "2026-04-16",
+          "open": 5721.52,
+          "close": 5734.51,
+          "high": 5747.2,
+          "low": 5713.89,
+          "volume": 45977478,
+          "amount": 52346518726.0,
+          "change_pct": 0,
+          "change_amt": 0.58
+        },
+        {
+          "date": "2026-04-17",
+          "open": 5725.02,
+          "close": 5695.32,
+          "high": 5726.16,
+          "low": 5685.54,
+          "volume": 41746215,
+          "amount": 47303949407.0,
+          "change_pct": 0,
+          "change_amt": 0.71
+        },
+        {
+          "date": "2026-04-20",
+          "open": 5697.68,
+          "close": 5702.51,
+          "high": 5713.24,
+          "low": 5686.35,
+          "volume": 48049929,
+          "amount": 53848863485.0,
+          "change_pct": 0,
+          "change_amt": 0.47
+        },
+        {
+          "date": "2026-04-21",
+          "open": 5700.38,
+          "close": 5752.84,
+          "high": 5764.0,
+          "low": 5698.11,
+          "volume": 47550474,
+          "amount": 52166267987.0,
+          "change_pct": 0,
+          "change_amt": 1.16
+        },
+        {
+          "date": "2026-04-22",
+          "open": 5750.85,
+          "close": 5752.38,
+          "high": 5774.65,
+          "low": 5742.88,
+          "volume": 42734478,
+          "amount": 49490035611.0,
+          "change_pct": 0,
+          "change_amt": 0.55
+        },
+        {
+          "date": "2026-04-23",
+          "open": 5748.97,
+          "close": 5781.32,
+          "high": 5790.16,
+          "low": 5733.28,
+          "volume": 56251487,
+          "amount": 62490542314.0,
+          "change_pct": 0,
+          "change_amt": 0.99
+        },
+        {
+          "date": "2026-04-24",
+          "open": 5756.08,
+          "close": 5776.34,
+          "high": 5786.58,
+          "low": 5750.98,
+          "volume": 48202680,
+          "amount": 55337474185.0,
+          "change_pct": 0,
+          "change_amt": 0.62
+        },
+        {
+          "date": "2026-04-27",
+          "open": 5755.37,
+          "close": 5763.87,
+          "high": 5796.67,
+          "low": 5754.25,
+          "volume": 52543704,
+          "amount": 60334643185.0,
+          "change_pct": 0,
+          "change_amt": 0.73
+        },
+        {
+          "date": "2026-04-28",
+          "open": 5737.89,
+          "close": 5828.88,
+          "high": 5829.56,
+          "low": 5737.61,
+          "volume": 58243624,
+          "amount": 65150460487.0,
+          "change_pct": 0,
+          "change_amt": 1.6
+        },
+        {
+          "date": "2026-04-29",
+          "open": 5822.8,
+          "close": 5884.27,
+          "high": 5893.2,
+          "low": 5821.9,
+          "volume": 68196309,
+          "amount": 90373827653.0,
+          "change_pct": 0,
+          "change_amt": 1.22
+        },
+        {
+          "date": "2026-04-30",
+          "open": 5879.41,
+          "close": 5865.07,
+          "high": 5900.14,
+          "low": 5836.79,
+          "volume": 66216582,
+          "amount": 76319382628.0,
+          "change_pct": 0,
+          "change_amt": 1.08
+        },
+        {
+          "date": "2026-05-06",
+          "open": 5851.88,
+          "close": 5881.84,
+          "high": 5883.91,
+          "low": 5810.65,
+          "volume": 69000033,
+          "amount": 80127089541.0,
+          "change_pct": 0,
+          "change_amt": 1.25
+        },
+        {
+          "date": "2026-05-07",
+          "open": 5861.28,
+          "close": 5787.2,
+          "high": 5861.28,
+          "low": 5779.68,
+          "volume": 59870323,
+          "amount": 74382443793.0,
+          "change_pct": 0,
+          "change_amt": 1.39
+        },
+        {
+          "date": "2026-05-08",
+          "open": 5791.79,
+          "close": 5767.67,
+          "high": 5820.73,
+          "low": 5750.28,
+          "volume": 49186677,
+          "amount": 57891397850.0,
+          "change_pct": 0,
+          "change_amt": 1.22
+        },
+        {
+          "date": "2026-05-11",
+          "open": 5763.2,
+          "close": 5783.46,
+          "high": 5795.14,
+          "low": 5750.38,
+          "volume": 64072492,
+          "amount": 71222274396.0,
+          "change_pct": 0,
+          "change_amt": 0.78
+        },
+        {
+          "date": "2026-05-12",
+          "open": 5786.77,
+          "close": 5774.72,
+          "high": 5813.68,
+          "low": 5767.14,
+          "volume": 54164632,
+          "amount": 62054618556.0,
+          "change_pct": 0,
+          "change_amt": 0.8
+        },
+        {
+          "date": "2026-05-13",
+          "open": 5772.59,
+          "close": 5748.08,
+          "high": 5791.57,
+          "low": 5728.42,
+          "volume": 50980561,
+          "amount": 60232285017.0,
+          "change_pct": 0,
+          "change_amt": 1.09
+        },
+        {
+          "date": "2026-05-14",
+          "open": 5743.28,
+          "close": 5694.31,
+          "high": 5751.74,
+          "low": 5694.31,
+          "volume": 55224114,
+          "amount": 61477059155.0,
+          "change_pct": 0,
+          "change_amt": 1.0
+        },
+        {
+          "date": "2026-05-15",
+          "open": 5695.49,
+          "close": 5680.37,
+          "high": 5720.95,
+          "low": 5657.27,
+          "volume": 57564847,
+          "amount": 66232122653.0,
+          "change_pct": 0,
+          "change_amt": 1.12
+        },
+        {
+          "date": "2026-05-18",
+          "open": 5678.26,
+          "close": 5654.2,
+          "high": 5691.03,
+          "low": 5622.88,
+          "volume": 50840733,
+          "amount": 57897293280.0,
+          "change_pct": 0,
+          "change_amt": 1.2
+        },
+        {
+          "date": "2026-05-19",
+          "open": 5639.1,
+          "close": 5662.36,
+          "high": 5665.32,
+          "low": 5632.14,
+          "volume": 45964575,
+          "amount": 51557674021.0,
+          "change_pct": 0,
+          "change_amt": 0.59
+        },
+        {
+          "date": "2026-05-20",
+          "open": 5647.94,
+          "close": 5643.58,
+          "high": 5664.68,
+          "low": 5634.57,
+          "volume": 45326100,
+          "amount": 50614752300.0,
+          "change_pct": 0,
+          "change_amt": 0.53
+        },
+        {
+          "date": "2026-05-21",
+          "open": 5628.56,
+          "close": 5554.67,
+          "high": 5664.16,
+          "low": 5554.67,
+          "volume": 53196374,
+          "amount": 59413734719.0,
+          "change_pct": 0,
+          "change_amt": 1.94
+        },
+        {
+          "date": "2026-05-22",
+          "open": 5563.25,
+          "close": 5545.14,
+          "high": 5567.65,
+          "low": 5514.29,
+          "volume": 47240673,
+          "amount": 51237334714.0,
+          "change_pct": 0,
+          "change_amt": 0.96
+        },
+        {
+          "date": "2026-05-25",
+          "open": 5591.63,
+          "close": 5572.23,
+          "high": 5618.25,
+          "low": 5558.05,
+          "volume": 47297876,
+          "amount": 56955308329.0,
+          "change_pct": 0,
+          "change_amt": 1.09
+        },
+        {
+          "date": "2026-05-26",
+          "open": 5547.46,
+          "close": 5577.26,
+          "high": 5581.52,
+          "low": 5537.44,
+          "volume": 48382425,
+          "amount": 56031656680.0,
+          "change_pct": 0,
+          "change_amt": 0.79
+        },
+        {
+          "date": "2026-05-27",
+          "open": 5567.03,
+          "close": 5527.16,
+          "high": 5576.82,
+          "low": 5500.76,
+          "volume": 53137251,
+          "amount": 57795930425.0,
+          "change_pct": 0,
+          "change_amt": 1.36
+        },
+        {
+          "date": "2026-05-28",
+          "open": 5511.49,
+          "close": 5513.88,
+          "high": 5560.49,
+          "low": 5502.3,
+          "volume": 47535190,
+          "amount": 53150766187.0,
+          "change_pct": 0,
+          "change_amt": 1.05
+        },
+        {
           "date": "2026-05-29",
-          "close": 5578.69,
-          "change_pct": 1.18,
-          "change_amt": 64.81,
           "open": 5506.06,
+          "close": 5578.69,
           "high": 5596.92,
           "low": 5505.27,
           "volume": 64264624,
-          "amount": 70413133843.0
+          "amount": 70413133843.0,
+          "change_pct": 0,
+          "change_amt": 1.66
+        },
+        {
+          "date": "2026-06-01",
+          "open": 5581.57,
+          "close": 5726.1,
+          "high": 5727.59,
+          "low": 5568.49,
+          "volume": 70403664,
+          "amount": 74176298755.0,
+          "change_pct": 0,
+          "change_amt": 2.85
+        },
+        {
+          "date": "2026-06-02",
+          "open": 5732.28,
+          "close": 5708.55,
+          "high": 5792.57,
+          "low": 5691.58,
+          "volume": 65257591,
+          "amount": 73019820084.0,
+          "change_pct": 0,
+          "change_amt": 1.76
+        },
+        {
+          "date": "2026-06-03",
+          "open": 5682.57,
+          "close": 5706.47,
+          "high": 5730.84,
+          "low": 5626.81,
+          "volume": 59457979,
+          "amount": 64461823957.0,
+          "change_pct": 0,
+          "change_amt": 1.82
+        },
+        {
+          "date": "2026-06-04",
+          "open": 5681.77,
+          "close": 5681.52,
+          "high": 5729.61,
+          "low": 5660.47,
+          "volume": 52745282,
+          "amount": 59966390389.0,
+          "change_pct": 0,
+          "change_amt": 1.21
+        },
+        {
+          "date": "2026-06-05",
+          "open": 5666.17,
+          "close": 5683.85,
+          "high": 5737.95,
+          "low": 5665.48,
+          "volume": 58236330,
+          "amount": 63620736896.0,
+          "change_pct": 0,
+          "change_amt": 1.28
+        },
+        {
+          "date": "2026-06-08",
+          "open": 5632.95,
+          "close": 5633.62,
+          "high": 5690.01,
+          "low": 5608.73,
+          "volume": 67111140,
+          "amount": 70971775295.0,
+          "change_pct": 0,
+          "change_amt": 1.43
+        },
+        {
+          "date": "2026-06-09",
+          "open": 5601.03,
+          "close": 5629.97,
+          "high": 5633.18,
+          "low": 5582.28,
+          "volume": 61245559,
+          "amount": 64070746871.0,
+          "change_pct": 0,
+          "change_amt": 0.9
         },
         {
           "date": "2026-06-10",
-          "close": 5588.98,
-          "change_pct": -0.73,
-          "change_amt": -40.99,
           "open": 5597.45,
+          "close": 5588.98,
           "high": 5624.94,
           "low": 5570.07,
           "volume": 59332882,
-          "amount": 63141840583.0
+          "amount": 63141840583.0,
+          "change_pct": 0,
+          "change_amt": 0.97
+        },
+        {
+          "date": "2026-06-11",
+          "open": 5587.56,
+          "close": 5566.74,
+          "high": 5604.98,
+          "low": 5538.4,
+          "volume": 52846639,
+          "amount": 56382650101.0,
+          "change_pct": 0,
+          "change_amt": 1.19
+        },
+        {
+          "date": "2026-06-12",
+          "open": 5548.05,
+          "close": 5649.5,
+          "high": 5659.75,
+          "low": 5539.64,
+          "volume": 77717731,
+          "amount": 85092924908.0,
+          "change_pct": 0,
+          "change_amt": 2.16
+        },
+        {
+          "date": "2026-06-15",
+          "open": 5629.04,
+          "close": 5590.7,
+          "high": 5632.51,
+          "low": 5563.96,
+          "volume": 74369656,
+          "amount": 84182981010.0,
+          "change_pct": 0,
+          "change_amt": 1.21
+        },
+        {
+          "date": "2026-06-16",
+          "open": 5565.22,
+          "close": 5493.67,
+          "high": 5565.22,
+          "low": 5489.35,
+          "volume": 53677221,
+          "amount": 62286894062.0,
+          "change_pct": 0,
+          "change_amt": 1.36
+        },
+        {
+          "date": "2026-06-17",
+          "open": 5481.29,
+          "close": 5434.15,
+          "high": 5482.3,
+          "low": 5420.18,
+          "volume": 50516275,
+          "amount": 53428118658.0,
+          "change_pct": 0,
+          "change_amt": 1.13
+        },
+        {
+          "date": "2026-06-18",
+          "open": 5410.37,
+          "close": 5316.65,
+          "high": 5412.87,
+          "low": 5314.64,
+          "volume": 64912177,
+          "amount": 71648668665.0,
+          "change_pct": 0,
+          "change_amt": 1.81
+        },
+        {
+          "date": "2026-06-22",
+          "open": 5302.59,
+          "close": 5373.33,
+          "high": 5375.64,
+          "low": 5243.11,
+          "volume": 67787869,
+          "amount": 76013600960.0,
+          "change_pct": 0,
+          "change_amt": 2.49
         },
         {
           "date": "2026-06-23",
-          "close": 5342.69,
-          "change_pct": -0.57,
-          "change_amt": -30.64,
           "open": 5362.7,
+          "close": 5342.69,
           "high": 5422.49,
           "low": 5329.66,
           "volume": 68692603,
-          "amount": 72928035072.0
+          "amount": 72928035072.0,
+          "change_pct": 0,
+          "change_amt": 1.73
+        },
+        {
+          "date": "2026-06-24",
+          "open": 5340.85,
+          "close": 5262.82,
+          "high": 5340.85,
+          "low": 5252.25,
+          "volume": 63456294,
+          "amount": 65764450019.0,
+          "change_pct": 0,
+          "change_amt": 1.66
+        },
+        {
+          "date": "2026-06-25",
+          "open": 5229.97,
+          "close": 5198.51,
+          "high": 5272.24,
+          "low": 5191.07,
+          "volume": 60891980,
+          "amount": 67511386583.0,
+          "change_pct": 0,
+          "change_amt": 1.54
+        },
+        {
+          "date": "2026-06-26",
+          "open": 5196.03,
+          "close": 5085.73,
+          "high": 5196.03,
+          "low": 5085.17,
+          "volume": 58366305,
+          "amount": 60627737459.0,
+          "change_pct": 0,
+          "change_amt": 2.13
+        },
+        {
+          "date": "2026-06-29",
+          "open": 5083.71,
+          "close": 5120.71,
+          "high": 5125.79,
+          "low": 4998.15,
+          "volume": 61767670,
+          "amount": 61490935426.0,
+          "change_pct": 0,
+          "change_amt": 2.51
+        },
+        {
+          "date": "2026-06-30",
+          "open": 5103.91,
+          "close": 5022.46,
+          "high": 5104.46,
+          "low": 4995.49,
+          "volume": 61235757,
+          "amount": 58883911218.0,
+          "change_pct": 0,
+          "change_amt": 2.13
+        },
+        {
+          "date": "2026-07-01",
+          "open": 5015.78,
+          "close": 5108.21,
+          "high": 5133.62,
+          "low": 5004.03,
+          "volume": 54022509,
+          "amount": 57078190623.0,
+          "change_pct": 0,
+          "change_amt": 2.58
+        },
+        {
+          "date": "2026-07-02",
+          "open": 5104.78,
+          "close": 5154.94,
+          "high": 5185.26,
+          "low": 5103.1,
+          "volume": 60095257,
+          "amount": 62877839220.0,
+          "change_pct": 0,
+          "change_amt": 1.61
+        },
+        {
+          "date": "2026-07-03",
+          "open": 5168.94,
+          "close": 5207.46,
+          "high": 5228.75,
+          "low": 5168.37,
+          "volume": 54485190,
+          "amount": 57531196476.0,
+          "change_pct": 0,
+          "change_amt": 1.17
+        },
+        {
+          "date": "2026-07-06",
+          "open": 5198.15,
+          "close": 5314.92,
+          "high": 5320.52,
+          "low": 5179.15,
+          "volume": 60770960,
+          "amount": 62503729696.0,
+          "change_pct": 0,
+          "change_amt": 2.71
+        },
+        {
+          "date": "2026-07-07",
+          "open": 5313.87,
+          "close": 5239.37,
+          "high": 5319.9,
+          "low": 5216.56,
+          "volume": 52807664,
+          "amount": 52044061557.0,
+          "change_pct": 0,
+          "change_amt": 1.94
+        },
+        {
+          "date": "2026-07-08",
+          "open": 5231.84,
+          "close": 5264.79,
+          "high": 5311.14,
+          "low": 5210.7,
+          "volume": 53952140,
+          "amount": 53160984934.0,
+          "change_pct": 0,
+          "change_amt": 1.92
+        },
+        {
+          "date": "2026-07-09",
+          "open": 5239.89,
+          "close": 5200.44,
+          "high": 5242.13,
+          "low": 5184.15,
+          "volume": 51526912,
+          "amount": 51823030422.0,
+          "change_pct": 0,
+          "change_amt": 1.1
         },
         {
           "date": "2026-07-10",
-          "close": 5184.1,
-          "change_pct": -0.31,
-          "change_amt": -16.34,
           "open": 5169.17,
-          "high": 5215.18,
-          "low": 5139.29,
-          "volume": 53304871,
-          "amount": 54470435427.0
-        },
-        {
-          "date": "2026-07-10",
           "close": 5184.1,
-          "change_pct": -0.31,
-          "change_amt": -16.34,
-          "open": 5169.17,
           "high": 5215.18,
           "low": 5139.29,
           "volume": 53304871,
           "amount": 54470435427.0,
-          "record_date": "2026-07-12",
-          "policy_note": "该复盘日非交易日，使用前一交易日收盘点位"
+          "change_pct": 0,
+          "change_amt": 1.46
+        },
+        {
+          "date": "2026-07-13",
+          "open": 5170.81,
+          "close": 5198.11,
+          "high": 5221.88,
+          "low": 5149.4,
+          "volume": 65199976,
+          "amount": 63737128463.0,
+          "change_pct": 0,
+          "change_amt": 1.4
         },
         {
           "date": "2026-07-14",
-          "close": 5307.5,
-          "change_pct": 2.1,
-          "change_amt": 109.39,
           "open": 5195.83,
+          "close": 5307.5,
           "high": 5312.25,
           "low": 5195.83,
           "volume": 67167696,
-          "amount": 69684948938.0
+          "amount": 69684948938.0,
+          "change_pct": 0,
+          "change_amt": 2.24
+        },
+        {
+          "date": "2026-07-15",
+          "open": 5286.75,
+          "close": 5378.84,
+          "high": 5384.21,
+          "low": 5271.82,
+          "volume": 62772154,
+          "amount": 67460194272.0,
+          "change_pct": 0,
+          "change_amt": 2.12
         },
         {
           "date": "2026-07-16",
-          "close": 5321.07,
-          "change_pct": -1.07,
-          "change_amt": -57.77,
           "open": 5357.86,
+          "close": 5321.07,
           "high": 5403.04,
           "low": 5304.39,
           "volume": 54463709,
-          "amount": 54972461992.0
+          "amount": 54972461992.0,
+          "change_pct": 0,
+          "change_amt": 1.83
         },
         {
           "date": "2026-07-17",
-          "close": 5281.81,
-          "change_pct": -0.74,
-          "change_amt": -39.26,
           "open": 5312.3,
+          "close": 5281.81,
           "high": 5362.09,
           "low": 5280.41,
           "volume": 74763545,
-          "amount": 73704308951.0
+          "amount": 73704308951.0,
+          "change_pct": 0,
+          "change_amt": 1.54
         },
         {
           "date": "2026-07-20",
-          "close": 5450.51,
-          "change_pct": 3.19,
-          "change_amt": 168.7,
           "open": 5297.87,
+          "close": 5450.51,
           "high": 5450.51,
           "low": 5297.87,
           "volume": 90113174,
-          "amount": 93257592847.0
+          "amount": 93257592847.0,
+          "change_pct": 0,
+          "change_amt": 2.89
+        },
+        {
+          "date": "2026-07-21",
+          "open": 5434.93,
+          "close": 5391.09,
+          "high": 5501.56,
+          "low": 5377.15,
+          "volume": 87388035,
+          "amount": 92506936510.0,
+          "change_pct": 0,
+          "change_amt": 2.28
+        },
+        {
+          "date": "2026-07-22",
+          "open": 5378.64,
+          "close": 5452.59,
+          "high": 5452.59,
+          "low": 5342.76,
+          "volume": 64921023,
+          "amount": 72597832899.0,
+          "change_pct": 0,
+          "change_amt": 2.04
+        },
+        {
+          "date": "2026-07-23",
+          "open": 5429.54,
+          "close": 5505.69,
+          "high": 5509.0,
+          "low": 5420.61,
+          "volume": 53081637,
+          "amount": 61037583415.0,
+          "change_pct": 0,
+          "change_amt": 1.62
+        },
+        {
+          "date": "2026-07-24",
+          "open": 5495.44,
+          "close": 5404.28,
+          "high": 5513.68,
+          "low": 5403.77,
+          "volume": 53739636,
+          "amount": 60203162408.0,
+          "change_pct": 0,
+          "change_amt": 2.0
+        },
+        {
+          "date": "2026-07-27",
+          "open": 5377.77,
+          "close": 5434.0,
+          "high": 5446.86,
+          "low": 5363.34,
+          "volume": 56512499,
+          "amount": 57957038858.0,
+          "change_pct": 0,
+          "change_amt": 1.55
         },
         {
           "date": "2026-07-28",
-          "close": 5437.92,
-          "change_pct": 0.07,
-          "change_amt": 3.92,
           "open": 5407.22,
+          "close": 5437.92,
           "high": 5442.49,
           "low": 5365.28,
           "volume": 61713590,
-          "amount": 62497401131.0
+          "amount": 62497401131.0,
+          "change_pct": 0,
+          "change_amt": 1.42
+        },
+        {
+          "date": "2026-07-29",
+          "open": 5442.35,
+          "close": 5519.12,
+          "high": 5536.9,
+          "low": 5439.82,
+          "volume": 63222536,
+          "amount": 66420296380.0,
+          "change_pct": 0,
+          "change_amt": 1.79
         }
       ]
     }
   },
   "index_valuation": {
     "csi_dividend": {
-      "pe2": 10.66,
-      "div_yield2": 4.47,
-      "date": "2026-07-28",
+      "pe2": 10.02,
+      "div_yield2": 4.76,
+      "date": "20260701",
       "source": "中证指数有限公司指数估值Excel",
       "source_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/indicator/000922indicator.xls",
       "policy": "计算用指标：市盈率2（计算用股本）P/E2、股息率2（计算用股本）D/P2"
@@ -198,104 +1219,104 @@
       "policy": "日变动计算使用市盈率2（计算用股本）P/E2、股息率2（计算用股本）D/P2",
       "data": [
         {
-          "date": "2026-07-01",
-          "pe2": 10.02,
-          "div_yield2": 4.76
+          "date": "20260728",
+          "pe2": 10.66,
+          "div_yield2": 4.47
         },
         {
-          "date": "2026-07-02",
-          "pe2": 10.11,
-          "div_yield2": 4.72
-        },
-        {
-          "date": "2026-07-03",
-          "pe2": 10.21,
-          "div_yield2": 4.67
-        },
-        {
-          "date": "2026-07-06",
-          "pe2": 10.42,
-          "div_yield2": 4.57
-        },
-        {
-          "date": "2026-07-07",
-          "pe2": 10.28,
-          "div_yield2": 4.64
-        },
-        {
-          "date": "2026-07-08",
-          "pe2": 10.32,
-          "div_yield2": 4.62
-        },
-        {
-          "date": "2026-07-09",
-          "pe2": 10.2,
-          "div_yield2": 4.67
-        },
-        {
-          "date": "2026-07-10",
-          "pe2": 10.16,
-          "div_yield2": 4.69
-        },
-        {
-          "date": "2026-07-13",
-          "pe2": 10.19,
-          "div_yield2": 4.68
-        },
-        {
-          "date": "2026-07-14",
-          "pe2": 10.41,
-          "div_yield2": 4.58
-        },
-        {
-          "date": "2026-07-15",
-          "pe2": 10.54,
-          "div_yield2": 4.52
-        },
-        {
-          "date": "2026-07-16",
-          "pe2": 10.42,
-          "div_yield2": 4.57
-        },
-        {
-          "date": "2026-07-17",
-          "pe2": 10.35,
-          "div_yield2": 4.6
-        },
-        {
-          "date": "2026-07-20",
-          "pe2": 10.68,
-          "div_yield2": 4.46
-        },
-        {
-          "date": "2026-07-21",
-          "pe2": 10.57,
-          "div_yield2": 4.51
-        },
-        {
-          "date": "2026-07-22",
-          "pe2": 10.69,
-          "div_yield2": 4.46
-        },
-        {
-          "date": "2026-07-23",
-          "pe2": 10.79,
-          "div_yield2": 4.41
-        },
-        {
-          "date": "2026-07-24",
-          "pe2": 10.6,
-          "div_yield2": 4.5
-        },
-        {
-          "date": "2026-07-27",
+          "date": "20260727",
           "pe2": 10.65,
           "div_yield2": 4.47
         },
         {
-          "date": "2026-07-28",
-          "pe2": 10.66,
-          "div_yield2": 4.47
+          "date": "20260724",
+          "pe2": 10.6,
+          "div_yield2": 4.5
+        },
+        {
+          "date": "20260723",
+          "pe2": 10.79,
+          "div_yield2": 4.41
+        },
+        {
+          "date": "20260722",
+          "pe2": 10.69,
+          "div_yield2": 4.46
+        },
+        {
+          "date": "20260721",
+          "pe2": 10.57,
+          "div_yield2": 4.51
+        },
+        {
+          "date": "20260720",
+          "pe2": 10.68,
+          "div_yield2": 4.46
+        },
+        {
+          "date": "20260717",
+          "pe2": 10.35,
+          "div_yield2": 4.6
+        },
+        {
+          "date": "20260716",
+          "pe2": 10.42,
+          "div_yield2": 4.57
+        },
+        {
+          "date": "20260715",
+          "pe2": 10.54,
+          "div_yield2": 4.52
+        },
+        {
+          "date": "20260714",
+          "pe2": 10.41,
+          "div_yield2": 4.58
+        },
+        {
+          "date": "20260713",
+          "pe2": 10.19,
+          "div_yield2": 4.68
+        },
+        {
+          "date": "20260710",
+          "pe2": 10.16,
+          "div_yield2": 4.69
+        },
+        {
+          "date": "20260709",
+          "pe2": 10.2,
+          "div_yield2": 4.67
+        },
+        {
+          "date": "20260708",
+          "pe2": 10.32,
+          "div_yield2": 4.62
+        },
+        {
+          "date": "20260707",
+          "pe2": 10.28,
+          "div_yield2": 4.64
+        },
+        {
+          "date": "20260706",
+          "pe2": 10.42,
+          "div_yield2": 4.57
+        },
+        {
+          "date": "20260703",
+          "pe2": 10.21,
+          "div_yield2": 4.67
+        },
+        {
+          "date": "20260702",
+          "pe2": 10.11,
+          "div_yield2": 4.72
+        },
+        {
+          "date": "20260701",
+          "pe2": 10.02,
+          "div_yield2": 4.76
         }
       ]
     }
@@ -305,7 +1326,7 @@
     "y10": 1.725,
     "source": "Investing.com (英为财情)",
     "source_url": "https://cn.investing.com/rates-bonds/china-10-year-bond-yield",
-    "note": "按用户要求固定展示至2026-07-28昨日收盘口径"
+    "note": "按用户要求展示至2026-07-28昨日收盘口径"
   },
   "bond_yield_history": {
     "china_10y": {
@@ -528,8 +1549,8 @@
     }
   },
   "technical": {
-    "date": "2026-07-28",
-    "rsi24": 51.26,
+    "date": "20260701",
+    "rsi24": 53.5,
     "source": "东方财富历史行情收盘价计算",
     "method": "RSI24=Wilder/RMA，基于中证红利日收盘价"
   },
@@ -542,214 +1563,399 @@
       "method": "RSI24=Wilder/RMA，基于中证红利每日收盘价滚动计算",
       "data": [
         {
+          "date": "2026-04-03",
+          "close": 5649.43,
+          "rsi24": 37.98
+        },
+        {
+          "date": "2026-04-07",
+          "close": 5677.98,
+          "rsi24": 39.67
+        },
+        {
+          "date": "2026-04-08",
+          "close": 5723.65,
+          "rsi24": 42.29
+        },
+        {
+          "date": "2026-04-09",
+          "close": 5680.34,
+          "rsi24": 40.55
+        },
+        {
+          "date": "2026-04-10",
+          "close": 5692.53,
+          "rsi24": 41.26
+        },
+        {
+          "date": "2026-04-13",
+          "close": 5688.09,
+          "rsi24": 41.07
+        },
+        {
+          "date": "2026-04-14",
+          "close": 5700.24,
+          "rsi24": 41.82
+        },
+        {
+          "date": "2026-04-15",
+          "close": 5720.59,
+          "rsi24": 43.09
+        },
+        {
+          "date": "2026-04-16",
+          "close": 5734.51,
+          "rsi24": 43.97
+        },
+        {
+          "date": "2026-04-17",
+          "close": 5695.32,
+          "rsi24": 42.07
+        },
+        {
+          "date": "2026-04-20",
+          "close": 5702.51,
+          "rsi24": 42.54
+        },
+        {
+          "date": "2026-04-21",
+          "close": 5752.84,
+          "rsi24": 45.79
+        },
+        {
+          "date": "2026-04-22",
+          "close": 5752.38,
+          "rsi24": 45.76
+        },
+        {
+          "date": "2026-04-23",
+          "close": 5781.32,
+          "rsi24": 47.61
+        },
+        {
+          "date": "2026-04-24",
+          "close": 5776.34,
+          "rsi24": 47.32
+        },
+        {
+          "date": "2026-04-27",
+          "close": 5763.87,
+          "rsi24": 46.58
+        },
+        {
+          "date": "2026-04-28",
+          "close": 5828.88,
+          "rsi24": 50.78
+        },
+        {
+          "date": "2026-04-29",
+          "close": 5884.27,
+          "rsi24": 53.99
+        },
+        {
+          "date": "2026-04-30",
+          "close": 5865.07,
+          "rsi24": 52.74
+        },
+        {
+          "date": "2026-05-06",
+          "close": 5881.84,
+          "rsi24": 53.71
+        },
+        {
+          "date": "2026-05-07",
+          "close": 5787.2,
+          "rsi24": 47.91
+        },
+        {
+          "date": "2026-05-08",
+          "close": 5767.67,
+          "rsi24": 46.82
+        },
+        {
+          "date": "2026-05-11",
+          "close": 5783.46,
+          "rsi24": 47.82
+        },
+        {
+          "date": "2026-05-12",
+          "close": 5774.72,
+          "rsi24": 47.31
+        },
+        {
+          "date": "2026-05-13",
+          "close": 5748.08,
+          "rsi24": 45.74
+        },
+        {
+          "date": "2026-05-14",
+          "close": 5694.31,
+          "rsi24": 42.76
+        },
+        {
+          "date": "2026-05-15",
+          "close": 5680.37,
+          "rsi24": 42.02
+        },
+        {
+          "date": "2026-05-18",
+          "close": 5654.2,
+          "rsi24": 40.64
+        },
+        {
+          "date": "2026-05-19",
+          "close": 5662.36,
+          "rsi24": 41.27
+        },
+        {
+          "date": "2026-05-20",
+          "close": 5643.58,
+          "rsi24": 40.25
+        },
+        {
+          "date": "2026-05-21",
+          "close": 5554.67,
+          "rsi24": 35.87
+        },
+        {
+          "date": "2026-05-22",
+          "close": 5545.14,
+          "rsi24": 35.43
+        },
+        {
+          "date": "2026-05-25",
+          "close": 5572.23,
+          "rsi24": 37.66
+        },
+        {
+          "date": "2026-05-26",
+          "close": 5577.26,
+          "rsi24": 38.07
+        },
+        {
+          "date": "2026-05-27",
+          "close": 5527.16,
+          "rsi24": 35.62
+        },
+        {
+          "date": "2026-05-28",
+          "close": 5513.88,
+          "rsi24": 34.99
+        },
+        {
           "date": "2026-05-29",
           "close": 5578.69,
-          "rsi24": 46.78
+          "rsi24": 40.32
         },
         {
           "date": "2026-06-01",
           "close": 5726.1,
-          "rsi24": 55.4
+          "rsi24": 50.04
         },
         {
           "date": "2026-06-02",
           "close": 5708.55,
-          "rsi24": 54.31
+          "rsi24": 49.04
         },
         {
           "date": "2026-06-03",
           "close": 5706.47,
-          "rsi24": 54.18
+          "rsi24": 48.92
         },
         {
           "date": "2026-06-04",
           "close": 5681.52,
-          "rsi24": 52.58
+          "rsi24": 47.47
         },
         {
           "date": "2026-06-05",
           "close": 5683.85,
-          "rsi24": 52.71
+          "rsi24": 47.62
         },
         {
           "date": "2026-06-08",
           "close": 5633.62,
-          "rsi24": 49.51
+          "rsi24": 44.72
         },
         {
           "date": "2026-06-09",
           "close": 5629.97,
-          "rsi24": 49.29
+          "rsi24": 44.51
         },
         {
           "date": "2026-06-10",
           "close": 5588.98,
-          "rsi24": 46.78
+          "rsi24": 42.24
         },
         {
           "date": "2026-06-11",
           "close": 5566.74,
-          "rsi24": 45.47
+          "rsi24": 41.05
         },
         {
           "date": "2026-06-12",
           "close": 5649.5,
-          "rsi24": 50.82
+          "rsi24": 46.86
         },
         {
           "date": "2026-06-15",
           "close": 5590.7,
-          "rsi24": 47.37
+          "rsi24": 43.67
         },
         {
           "date": "2026-06-16",
           "close": 5493.67,
-          "rsi24": 42.42
+          "rsi24": 39.08
         },
         {
           "date": "2026-06-17",
           "close": 5434.15,
-          "rsi24": 39.75
+          "rsi24": 36.62
         },
         {
           "date": "2026-06-18",
           "close": 5316.65,
-          "rsi24": 35.2
+          "rsi24": 32.42
         },
         {
           "date": "2026-06-22",
           "close": 5373.33,
-          "rsi24": 38.73
+          "rsi24": 36.11
         },
         {
           "date": "2026-06-23",
           "close": 5342.69,
-          "rsi24": 37.58
+          "rsi24": 35.03
         },
         {
           "date": "2026-06-24",
           "close": 5262.82,
-          "rsi24": 34.76
+          "rsi24": 32.4
         },
         {
           "date": "2026-06-25",
           "close": 5198.51,
-          "rsi24": 32.7
+          "rsi24": 30.47
         },
         {
           "date": "2026-06-26",
           "close": 5085.73,
-          "rsi24": 29.5
+          "rsi24": 27.49
         },
         {
           "date": "2026-06-29",
           "close": 5120.71,
-          "rsi24": 31.66
+          "rsi24": 29.72
         },
         {
           "date": "2026-06-30",
           "close": 5022.46,
-          "rsi24": 29.05
+          "rsi24": 27.26
         },
         {
           "date": "2026-07-01",
           "close": 5108.21,
-          "rsi24": 34.01
+          "rsi24": 32.35
         },
         {
           "date": "2026-07-02",
           "close": 5154.94,
-          "rsi24": 36.54
+          "rsi24": 34.94
         },
         {
           "date": "2026-07-03",
           "close": 5207.46,
-          "rsi24": 39.26
+          "rsi24": 37.74
         },
         {
           "date": "2026-07-06",
           "close": 5314.92,
-          "rsi24": 44.36
+          "rsi24": 42.98
         },
         {
           "date": "2026-07-07",
           "close": 5239.37,
-          "rsi24": 41.79
+          "rsi24": 40.48
         },
         {
           "date": "2026-07-08",
           "close": 5264.79,
-          "rsi24": 42.95
+          "rsi24": 41.67
         },
         {
           "date": "2026-07-09",
           "close": 5200.44,
-          "rsi24": 40.8
+          "rsi24": 39.58
         },
         {
           "date": "2026-07-10",
           "close": 5184.1,
-          "rsi24": 40.26
+          "rsi24": 39.06
         },
         {
           "date": "2026-07-13",
           "close": 5198.11,
-          "rsi24": 40.95
+          "rsi24": 39.77
         },
         {
           "date": "2026-07-14",
           "close": 5307.5,
-          "rsi24": 46.05
+          "rsi24": 44.97
         },
         {
           "date": "2026-07-15",
           "close": 5378.84,
-          "rsi24": 49.04
+          "rsi24": 48.02
         },
         {
           "date": "2026-07-16",
           "close": 5321.07,
-          "rsi24": 46.84
+          "rsi24": 45.87
         },
         {
           "date": "2026-07-17",
           "close": 5281.81,
-          "rsi24": 45.4
+          "rsi24": 44.46
         },
         {
           "date": "2026-07-20",
           "close": 5450.51,
-          "rsi24": 52.02
+          "rsi24": 51.19
         },
         {
           "date": "2026-07-21",
           "close": 5391.09,
-          "rsi24": 49.8
+          "rsi24": 49.01
         },
         {
           "date": "2026-07-22",
           "close": 5452.59,
-          "rsi24": 52.01
+          "rsi24": 51.26
         },
         {
           "date": "2026-07-23",
           "close": 5505.69,
-          "rsi24": 53.84
+          "rsi24": 53.12
         },
         {
           "date": "2026-07-24",
           "close": 5404.28,
-          "rsi24": 50.04
+          "rsi24": 49.36
         },
         {
           "date": "2026-07-27",
           "close": 5434.0,
-          "rsi24": 51.09
+          "rsi24": 50.43
         },
         {
           "date": "2026-07-28",
           "close": 5437.92,
-          "rsi24": 51.24
+          "rsi24": 50.58
+        },
+        {
+          "date": "2026-07-29",
+          "close": 5519.12,
+          "rsi24": 53.5
         }
       ]
     }
@@ -761,143 +1967,10 @@
       "source": "中证官网指数估值Excel + 每日国债收益率",
       "data": [
         {
-          "date": "2026-07-01",
+          "date": "20260701",
           "div_yield2": 4.76,
-          "y10": 1.7448,
-          "spread": 3.02,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-02",
-          "div_yield2": 4.72,
-          "y10": 1.741,
-          "spread": 2.98,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-03",
-          "div_yield2": 4.67,
-          "y10": 1.7463,
-          "spread": 2.92,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-06",
-          "div_yield2": 4.57,
-          "y10": 1.7379,
-          "spread": 2.83,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-07",
-          "div_yield2": 4.64,
-          "y10": 1.7406,
-          "spread": 2.9,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-08",
-          "div_yield2": 4.62,
-          "y10": 1.7385,
-          "spread": 2.88,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-09",
-          "div_yield2": 4.67,
-          "y10": 1.7376,
-          "spread": 2.93,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-10",
-          "div_yield2": 4.69,
-          "y10": 1.7398,
-          "spread": 2.95,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-13",
-          "div_yield2": 4.68,
-          "y10": 1.7442,
-          "spread": 2.94,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-14",
-          "div_yield2": 4.58,
-          "y10": 1.7402,
-          "spread": 2.84,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-15",
-          "div_yield2": 4.52,
-          "y10": 1.7406,
-          "spread": 2.78,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-16",
-          "div_yield2": 4.57,
-          "y10": 1.7437,
-          "spread": 2.83,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-17",
-          "div_yield2": 4.6,
-          "y10": 1.7404,
-          "spread": 2.86,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-20",
-          "div_yield2": 4.46,
-          "y10": 1.7453,
-          "spread": 2.71,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-21",
-          "div_yield2": 4.51,
-          "y10": 1.745,
-          "spread": 2.76,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-22",
-          "div_yield2": 4.46,
-          "y10": 1.7297,
-          "spread": 2.73,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-23",
-          "div_yield2": 4.41,
-          "y10": 1.7325,
-          "spread": 2.68,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-24",
-          "div_yield2": 4.5,
-          "y10": 1.7282,
-          "spread": 2.77,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-27",
-          "div_yield2": 4.47,
-          "y10": 1.7337,
-          "spread": 2.74,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
-          "date": "2026-07-28",
-          "div_yield2": 4.47,
           "y10": 1.725,
-          "spread": 2.74,
+          "spread": 3.03,
           "bond_source": "Investing.com (英为财情)"
         }
       ]
@@ -1025,30 +2098,30 @@
   "strategy_advice": {
     "pe_advice": {
       "action": "持有观望",
-      "detail": "PE 10.66 处于合理区间，维持基础定投或持有",
+      "detail": "PE 10.02 处于合理区间，维持基础定投或持有",
       "level": "hold"
     },
     "div_advice": {
       "action": "正常区间",
-      "detail": "股息率 4.47% 处于正常区间，可继续持有",
+      "detail": "股息率 4.76% 处于正常区间，可继续持有",
       "level": "hold"
     },
     "spread_advice": {
       "action": "买入",
-      "detail": "股债利差 2.74% 较高，适合分批买入",
+      "detail": "股债利差 3.03% 较高，适合分批买入",
       "level": "buy"
     },
     "rsi_advice": {
       "action": "正常区间",
-      "detail": "RSI24=51.26 处于正常区间，无明显信号",
+      "detail": "RSI24=53.5 处于正常区间，无明显信号",
       "level": "hold"
     },
     "composite_advice": {
-      "action": "谨慎",
-      "detail": "综合评分 -1/4，偏谨慎，建议减少定投",
-      "level": "pause"
+      "action": "持有",
+      "detail": "综合评分 0/4，维持基础定投",
+      "level": "hold"
     },
-    "composite_score": -1,
-    "spread": 2.74
+    "composite_score": 0,
+    "spread": 3.03
   }
 }
