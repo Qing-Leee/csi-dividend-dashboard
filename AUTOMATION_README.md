@@ -48,7 +48,15 @@ scripts/run_update_and_notify.py
 每次运行：
 
 ```bash
-python3 /workspace/csi-dividend-dca-dashboard/scripts/run_update_and_notify.py
+python3 scripts/run_update_and_notify.py
+```
+
+如果在定时任务的新会话中运行，先拉取仓库：
+
+```bash
+git clone https://github.com/Qing-Leee/csi-dividend-dashboard.git /tmp/csi-dividend-dashboard
+cd /tmp/csi-dividend-dashboard
+python3 scripts/run_update_and_notify.py
 ```
 
 ## 环境变量

@@ -15,9 +15,11 @@ import subprocess
 import urllib.request
 import urllib.error
 from datetime import datetime, timedelta
+from pathlib import Path
 
 # ===== Paths =====
-OUTPUT_PATH = "/workspace/csi-dividend-dca-dashboard/assets/market_data.json"
+BASE_DIR = Path(__file__).resolve().parent.parent
+OUTPUT_PATH = str(BASE_DIR / "assets" / "market_data.json")
 BOND_CACHE = "/tmp/bond_yield_investing.json"
 FEISHU_CACHE = "/tmp/feishu_records.json"
 DISPLAY_DATE = "2026-07-28"  # 外部公开数据统一展示至该日期
@@ -429,7 +431,7 @@ def build_spread_history(valuation_history, bond_history):
 
 # ===== Inline data into HTML for self-contained sharing =====
 
-HTML_PATH = "/workspace/csi-dividend-dca-dashboard/index.html"
+HTML_PATH = str(BASE_DIR / "index.html")
 
 def inline_data_into_html(data):
     """
@@ -442,8 +444,6 @@ def inline_data_into_html(data):
     import re
     import base64
     import os
-    
-    BASE_DIR = "/workspace/csi-dividend-dca-dashboard"
     
     try:
         with open(HTML_PATH, 'r', encoding='utf-8') as f:

@@ -8,8 +8,8 @@
    - FEISHU_CHAT_ID：飞书群 chat_id，形如 oc_xxx
    或：
    - FEISHU_USER_ID：飞书用户 open_id，形如 ou_xxx
-2. 运行：
-   python3 /workspace/csi-dividend-dca-dashboard/scripts/run_update_and_notify.py
+2. 在项目根目录运行：
+   python3 scripts/run_update_and_notify.py
 
 说明：
 - 不创建新的交付物。
@@ -25,7 +25,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-BASE_DIR = Path("/workspace/csi-dividend-dca-dashboard")
+BASE_DIR = Path(__file__).resolve().parent.parent
 UPDATE_SCRIPT = BASE_DIR / "scripts" / "update_data.py"
 DATA_PATH = BASE_DIR / "assets" / "market_data.json"
 
