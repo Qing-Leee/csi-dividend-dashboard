@@ -61,6 +61,8 @@ def compose_summary(data):
     strategy = data.get("strategy_advice") or {}
     composite = strategy.get("composite_advice") or {}
     record = latest_record(data)
+    freshness = meta.get("data_freshness") or {}
+    feishu_freshness = freshness.get("feishu") or {}
 
     dashboard_url = os.environ.get(
         "DASHBOARD_PUBLIC_URL",
@@ -78,6 +80,17 @@ def compose_summary(data):
         "",
         f"更新时间：{update_time}",
         f"外部数据截至：{meta.get('market_date', '--')}",
+    ]
+
+    # Feishu data freshness warning
+    if not feishu_freshness.get("is_fresh", True):
+        last_date = feishu_freshness.get("last_record_date", "N/A")
+        lines.extend([
+            "",
+            f"⚠ 内部数据未更新：飞书数据同步失败，当前使用旧数据（最新记录：{last_date}）",
+        ])
+
+    lines.extend([
         "",
         f"累计投入：¥{record.get('cum_invest', 0):,.0f}",
         f"持有市值：¥{record.get('mkt_value', 0):,.2f}",
@@ -90,7 +103,7 @@ def compose_summary(data):
         f"股债利差：{strategy.get('spread', '--')}%",
         f"综合建议：{composite.get('action', '--')}",
         f"建议说明：{composite.get('detail', '--')}",
-    ]
+    ])
 
     if preview_url:
         lines.extend(["", f"内置预览链接：[点击查看看板]({preview_url})"])

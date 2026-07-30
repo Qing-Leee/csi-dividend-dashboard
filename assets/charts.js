@@ -58,7 +58,6 @@
     return {
       show: true,
       trigger: 'axis',
-      confine: true,
       appendToBody: true,
       axisPointer: { type: 'cross', lineStyle: { color: muted, type: 'dashed' }, label: { show: true } },
       backgroundColor: 'rgba(255,255,255,0.96)',
@@ -176,6 +175,17 @@
       document.getElementById('kpi-avg-cost').textContent = (lastRecord.avg_cost || 0).toFixed(4);
       document.getElementById('kpi-nav').textContent = (lastRecord.nav || 0).toFixed(4);
     }
+    // Dynamically update records count
+    var recordsInfoEl = document.getElementById('kpi-records-info');
+    if (recordsInfoEl && records.length) {
+      var firstD = String(records[0].date || '');
+      var lastD = String(lastRecord.date || '');
+      var firstYM = firstD.substring(0, 7).replace('-', '.');
+      var lastYM = lastD.substring(0, 7).replace('-', '.');
+      var lastM = lastD.substring(5, 7);
+      var dateRange = (firstYM.substring(0, 4) === lastYM.substring(0, 4)) ? firstYM + '~' + lastM : firstYM + '~' + lastYM;
+      recordsInfoEl.textContent = records.length + '笔记录 · ' + dateRange + ' · 飞书Base';
+    }
     // PE & Dividend Yield from public API
     var peEl = document.getElementById('kpi-pe');
     peEl.textContent = peVal.toFixed(2);
@@ -187,9 +197,12 @@
     document.getElementById('kpi-div-sub').textContent = '中证官网指数估值Excel · D/P2 · ' + (csiDiv.date || '2026-07-28');
 
     // ===== Update meta info =====
-    document.getElementById('meta-update').textContent = meta.update_time || '--';
-    document.getElementById('meta-period').textContent = '2026.05~' + todayShort;
-    document.getElementById('strategy-tag').textContent = '数据驱动 · ' + (meta.period_label || '盘中') + '版';
+    var metaUpdateEl = document.getElementById('meta-update');
+    if (metaUpdateEl) metaUpdateEl.textContent = meta.update_time || '--';
+    var metaPeriodEl = document.getElementById('meta-period');
+    if (metaPeriodEl) metaPeriodEl.textContent = '2026.05~' + todayShort;
+    var strategyTagEl = document.getElementById('strategy-tag');
+    if (strategyTagEl) strategyTagEl.textContent = '数据驱动 · ' + (meta.period_label || '盘中') + '版';
 
     // ===== Update strategy advice cards =====
     document.getElementById('strat-composite-action').textContent = (strategy.composite_advice && strategy.composite_advice.action) ? strategy.composite_advice.action : '--';

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "update_time": "2026-07-30 01:04:19",
+    "update_time": "2026-07-30 01:39:33",
     "period_label": "盘前",
     "is_trading_day": true,
     "data_sources": {
@@ -37,7 +37,15 @@
     "next_update": "14:30 盘中版（收盘前策略信号）",
     "market_date": "2026-07-29",
     "valuation_policy": "中证官网指数估值Excel，计算使用P/E2与D/P2",
-    "display_policy": "外部公开数据统一展示至2026-07-29，避免盘中实时波动"
+    "display_policy": "外部公开数据统一展示至2026-07-29，避免盘中实时波动",
+    "data_freshness": {
+      "feishu": {
+        "is_fresh": true,
+        "status": "lark-cli实时获取(2026-07-30)",
+        "last_record_date": "2026-07-30",
+        "record_count": 10
+      }
+    }
   },
   "index_spot": {
     "csi_dividend": {
@@ -979,119 +987,132 @@
     {
       "date": "2026-05-29",
       "action": "买入",
-      "invest": 1000,
+      "invest": 1000.0,
       "shares": 771.44,
       "nav": 1.2963,
-      "cum_invest": 1000,
+      "cum_invest": 1000.0,
       "cum_shares": 771.44,
-      "mkt_value": 1000.02,
+      "mkt_value": 1000.017672,
       "cum_return_pct": 0.0,
-      "pnl": 0.02,
-      "avg_cost": 1.2963
+      "pnl": 0.017672,
+      "avg_cost": 1.296277092
     },
     {
       "date": "2026-06-10",
       "action": "买入",
-      "invest": 500,
+      "invest": 500.0,
       "shares": 393.33,
       "nav": 1.2683,
-      "cum_invest": 1500,
+      "cum_invest": 1500.0,
       "cum_shares": 1164.77,
-      "mkt_value": 1477.28,
+      "mkt_value": 1477.277791,
       "cum_return_pct": -1.51,
-      "pnl": -22.72,
-      "avg_cost": 1.2878
+      "pnl": -22.722209,
+      "avg_cost": 1.287807893
     },
     {
       "date": "2026-06-23",
       "action": "买入",
-      "invest": 1000,
+      "invest": 1000.0,
       "shares": 818.98,
       "nav": 1.2203,
-      "cum_invest": 2500,
+      "cum_invest": 2500.0,
       "cum_shares": 1983.75,
-      "mkt_value": 2420.77,
+      "mkt_value": 2420.770125,
       "cum_return_pct": -3.17,
-      "pnl": -79.23,
-      "avg_cost": 1.2602
+      "pnl": -79.229875,
+      "avg_cost": 1.260239445
     },
     {
       "date": "2026-07-10",
       "action": "买入",
-      "invest": 500,
+      "invest": 500.0,
       "shares": 418.02,
       "nav": 1.1954,
-      "cum_invest": 3000,
+      "cum_invest": 3000.0,
       "cum_shares": 2401.77,
-      "mkt_value": 2871.08,
+      "mkt_value": 2871.075858,
       "cum_return_pct": -4.3,
-      "pnl": -128.92,
-      "avg_cost": 1.2491
+      "pnl": -128.924142,
+      "avg_cost": 1.249078804
     },
     {
       "date": "2026-07-12",
       "action": "买入",
-      "invest": 200,
+      "invest": 200.0,
       "shares": 165.19,
       "nav": 1.1954,
-      "cum_invest": 3200,
+      "cum_invest": 3200.0,
       "cum_shares": 2566.96,
-      "mkt_value": 3068.54,
+      "mkt_value": 3068.543984,
       "cum_return_pct": -4.11,
-      "pnl": -131.46,
-      "avg_cost": 1.2466
+      "pnl": -131.456016,
+      "avg_cost": 1.246610777
     },
     {
       "date": "2026-07-14",
       "action": "买入",
-      "invest": 200,
+      "invest": 200.0,
       "shares": 166.59,
       "nav": 1.1998,
-      "cum_invest": 3400,
+      "cum_invest": 3400.0,
       "cum_shares": 2733.55,
-      "mkt_value": 3279.71,
+      "mkt_value": 3279.71329,
       "cum_return_pct": -3.54,
-      "pnl": -120.29,
-      "avg_cost": 1.2438
+      "pnl": -120.28671,
+      "avg_cost": 1.243803845
     },
     {
       "date": "2026-07-16",
       "action": "买入",
-      "invest": 400,
+      "invest": 400.0,
       "shares": 322.52,
       "nav": 1.2395,
-      "cum_invest": 3800,
+      "cum_invest": 3800.0,
       "cum_shares": 3056.07,
-      "mkt_value": 3788.0,
+      "mkt_value": 3787.998765,
       "cum_return_pct": -0.32,
-      "pnl": -12.0,
-      "avg_cost": 1.2434
+      "pnl": -12.001235,
+      "avg_cost": 1.243427016
     },
     {
       "date": "2026-07-17",
       "action": "买入",
-      "invest": 200,
+      "invest": 200.0,
       "shares": 163.72,
       "nav": 1.2209,
-      "cum_invest": 4000,
+      "cum_invest": 4000.0,
       "cum_shares": 3219.79,
-      "mkt_value": 3931.04,
+      "mkt_value": 3931.041611,
       "cum_return_pct": -1.72,
-      "pnl": -68.96,
-      "avg_cost": 1.2423
+      "pnl": -68.958389,
+      "avg_cost": 1.242317046
     },
     {
       "date": "2026-07-20",
       "action": "观察",
-      "invest": 0,
-      "shares": 0,
+      "invest": 0.0,
+      "shares": 0.0,
       "nav": 1.2575,
-      "cum_invest": 4000,
+      "cum_invest": 4000.0,
       "cum_shares": 3219.79,
-      "mkt_value": 4048.89,
+      "mkt_value": 4048.885925,
       "cum_return_pct": 1.22,
-      "pnl": 48.89,
-      "avg_cost": 1.2423
+      "pnl": 48.885925,
+      "avg_cost": 1.242317046
+    },
+    {
+      "date": "2026-07-30",
+      "action": "观察",
+      "invest": 0.0,
+      "shares": 0.0,
+      "nav": 1.275,
+      "cum_invest": 4000.0,
+      "cum_shares": 3219.79,
+      "mkt_value": 4105.23225,
+      "cum_return_pct": 2.63,
+      "pnl": 105.23225,
+      "avg_cost": 1.242317046
     }
   ],
   "strategy_advice": {

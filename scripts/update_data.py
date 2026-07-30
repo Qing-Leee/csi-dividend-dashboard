@@ -202,31 +202,28 @@ def fetch_bond_yield_history():
 
 # ===== Data Source 5: Internal Feishu Records =====
 
+FEISHU_BASE_TOKEN = "Z8yYbFOcZaBaFMsmt6xcnaFpnlf"
+FEISHU_TABLE_ID = "tblJQJWinJCenmID"
+
 def fetch_feishu_records():
     """
     同步飞书多维表格中的定投复盘记录
-    方式1：从 /tmp/feishu_records.json 读取（由定时任务中的lark-cli步骤写入）
-    方式2：直接调用 lark-cli 命令获取
-    方式3：回退到现有 market_data.json 中的记录
-    """
-    # 方式1：读取缓存文件
-    if os.path.exists(FEISHU_CACHE):
-        try:
-            with open(FEISHU_CACHE, 'r') as f:
-                records = json.load(f)
-            if isinstance(records, list) and len(records) > 0:
-                print(f"[Feishu] 从缓存读取 {len(records)} 条定投记录")
-                return records
-        except Exception as e:
-            print(f"[Feishu] WARN: 缓存读取失败({e})，尝试lark-cli")
+    方式1：直接调用 lark-cli +record-list 获取最新数据
+    方式2：回退到现有 market_data.json 中的记录
     
-    # 方式2：尝试调用 lark-cli 获取飞书Base数据
+    Returns: (records, is_fresh, message)
+    - records: list of parsed records
+    - is_fresh: True if data was freshly fetched from Feishu
+    - message: status description
+    """
+    # 方式1：调用 lark-cli +record-list 获取飞书Base数据
     try:
         result = subprocess.run(
-            ["lark-cli", "base", "record", "search",
-             "--app-token", os.environ.get("FEISHU_APP_TOKEN", ""),
-             "--table-id", os.environ.get("FEISHU_TABLE_ID", ""),
+            ["lark-cli", "base", "+record-list",
              "--as", "user",
+             "--base-token", FEISHU_BASE_TOKEN,
+             "--table-id", FEISHU_TABLE_ID,
+             "--limit", "200",
              "--json"],
             capture_output=True, text=True, timeout=30
         )
@@ -234,50 +231,96 @@ def fetch_feishu_records():
             cli_data = json.loads(result.stdout)
             records = parse_feishu_cli_records(cli_data)
             if records:
-                print(f"[Feishu] 通过lark-cli获取 {len(records)} 条定投记录")
+                latest_date = records[-1].get("date", "unknown")
+                print(f"[Feishu] ✓ lark-cli获取成功: {len(records)} 条记录, 最新日期: {latest_date}")
                 # 缓存到文件供后续使用
-                with open(FEISHU_CACHE, 'w') as f:
-                    json.dump(records, f, ensure_ascii=False, indent=2)
-                return records
+                try:
+                    with open(FEISHU_CACHE, 'w') as f:
+                        json.dump(records, f, ensure_ascii=False, indent=2)
+                except:
+                    pass
+                return records, True, f"lark-cli实时获取({latest_date})"
+            else:
+                print(f"[Feishu] ✗ lark-cli返回数据但解析为0条记录")
+        else:
+            err_msg = result.stderr[:300] if result.stderr else "无stderr输出"
+            print(f"[Feishu] ✗ lark-cli失败(返回码={result.returncode}): {err_msg}")
     except Exception as e:
-        print(f"[Feishu] WARN: lark-cli调用失败({e})")
+        print(f"[Feishu] ✗ lark-cli调用异常: {e}")
     
-    # 方式3：回退到现有market_data.json中的记录
+    # 方式2：回退到现有market_data.json中的记录
     if os.path.exists(OUTPUT_PATH):
         try:
             with open(OUTPUT_PATH, 'r') as f:
                 existing = json.load(f)
             records = existing.get("feishu_records", [])
-            print(f"[Feishu] 回退到现有记录 {len(records)} 条（未能获取最新飞书数据）")
-            return records
+            latest_date = records[-1].get("date", "unknown") if records else "无记录"
+            print(f"[Feishu] ⚠ 回退到缓存数据: {len(records)} 条记录, 最新日期: {latest_date}")
+            print(f"[Feishu] ⚠ 警告: 飞书数据未更新！使用的是旧数据，最新记录日期为 {latest_date}")
+            return records, False, f"回退到缓存数据(最新:{latest_date})"
         except:
             pass
     
-    print("[Feishu] ERROR: 无法获取飞书记录，返回空列表")
-    return []
+    print("[Feishu] ✗ ERROR: 无法获取任何飞书记录")
+    return [], False, "获取失败"
 
 def parse_feishu_cli_records(cli_data):
-    """解析lark-cli返回的飞书Base记录，转换为看板所需格式"""
+    """解析lark-cli +record-list返回的飞书Base记录，转换为看板所需格式"""
     records = []
-    items = cli_data.get("data", {}).get("items", cli_data.get("items", []))
-    if not isinstance(items, list):
-        items = [items] if items else []
+    data = cli_data.get("data", {})
+    field_names = data.get("fields", [])
+    rows = data.get("data", [])
     
-    for item in items:
-        fields = item.get("fields", {})
+    if not field_names or not rows:
+        print(f"[Feishu] WARN: fields={len(field_names)}, rows={len(rows)}")
+        return records
+    
+    # 建立字段名到列索引的映射
+    col_map = {name: i for i, name in enumerate(field_names)}
+    
+    for row in rows:
         try:
+            def get_val(name, default=None):
+                idx = col_map.get(name)
+                if idx is None or idx >= len(row):
+                    return default
+                return row[idx]
+            
+            def to_float(val, default=0.0):
+                if val is None or val == '':
+                    return default
+                try:
+                    return float(val)
+                except (ValueError, TypeError):
+                    return default
+            
+            def to_str(val, default=''):
+                if val is None:
+                    return default
+                if isinstance(val, list):
+                    return ', '.join(str(v) for v in val)
+                return str(val)
+            
+            # 记录时间: "2026-07-12 00:00:00" -> "2026-07-12"
+            date_raw = to_str(get_val("记录时间", ""))
+            date_str = date_raw[:10] if len(date_raw) >= 10 else date_raw
+            
+            # 累计收益率: 小数形式 (-0.04108) -> 百分比 (-4.11)
+            cum_return_raw = to_float(get_val("累计收益率", 0))
+            cum_return_pct = round(cum_return_raw * 100, 2) if abs(cum_return_raw) < 1 else round(cum_return_raw, 2)
+            
             record = {
-                "date": str(fields.get("日期", fields.get("记录时间", "")))[:10],
-                "action": str(fields.get("操作", fields.get("定投动作", "买入"))),
-                "invest": float(fields.get("本期投入", 0) or 0),
-                "shares": float(fields.get("本期份额", 0) or 0),
-                "nav": float(fields.get("净值", 0) or 0),
-                "cum_invest": float(fields.get("累计投入", 0) or 0),
-                "cum_shares": float(fields.get("累计份额", 0) or 0),
-                "mkt_value": float(fields.get("持有市值", fields.get("持有总市值", 0)) or 0),
-                "cum_return_pct": float(fields.get("累计收益率", 0) or 0),
-                "pnl": float(fields.get("浮盈", fields.get("浮盈/亏", 0)) or 0),
-                "avg_cost": float(fields.get("均成本", fields.get("平均持仓成本", 0)) or 0),
+                "date": date_str,
+                "action": to_str(get_val("操作类型", "买入")),
+                "invest": to_float(get_val("本期投入", 0), 0),
+                "shares": to_float(get_val("本期份额", 0), 0),
+                "nav": to_float(get_val("净值", 0), 0),
+                "cum_invest": to_float(get_val("累计投入", 0), 0),
+                "cum_shares": to_float(get_val("累计份额", 0), 0),
+                "mkt_value": to_float(get_val("持有总市值", 0), 0),
+                "cum_return_pct": cum_return_pct,
+                "pnl": to_float(get_val("浮盈资金", 0), 0),
+                "avg_cost": to_float(get_val("平均持仓成本", 0), 0),
             }
             records.append(record)
         except Exception as e:
@@ -578,8 +621,8 @@ def main():
     
     # ===== Step 5: 内部飞书数据同步 =====
     print(f"\n[Feishu] 开始同步飞书定投复盘记录...")
-    feishu_records = fetch_feishu_records()
-    print(f"[Feishu] 获取 {len(feishu_records)} 条定投记录")
+    feishu_records, feishu_fresh, feishu_msg = fetch_feishu_records()
+    print(f"[Feishu] 获取 {len(feishu_records)} 条定投记录 (数据状态: {'✓最新' if feishu_fresh else '⚠旧数据'})")
     
     # ===== Step 6: 股债利差 =====
     spread = round(div_yield2 - y10, 2)
@@ -633,7 +676,15 @@ def main():
             "next_update": "14:30 盘中版（收盘前策略信号）" if period_label() == "盘前" else "次日 08:00 盘前版",
             "market_date": val_date,
             "valuation_policy": "中证官网指数估值Excel，计算使用P/E2与D/P2",
-            "display_policy": f"外部公开数据统一展示至{val_date}，避免盘中实时波动"
+            "display_policy": f"外部公开数据统一展示至{val_date}，避免盘中实时波动",
+            "data_freshness": {
+                "feishu": {
+                    "is_fresh": feishu_fresh,
+                    "status": feishu_msg,
+                    "last_record_date": feishu_records[-1].get("date") if feishu_records else None,
+                    "record_count": len(feishu_records)
+                }
+            }
         },
         "index_spot": {
             "csi_dividend": latest_index
@@ -726,7 +777,9 @@ def main():
     print(f"  - RSI24: {latest_rsi}")
     print(f"  - 十年期国债: {y10}%")
     print(f"  - 股债利差: {spread}%")
-    print(f"  - 飞书记录: {len(feishu_records)} 条")
+    print(f"  - 飞书记录: {len(feishu_records)} 条 ({'✓最新数据' if feishu_fresh else '⚠回退旧数据'})")
+    if not feishu_fresh:
+        print(f"  ⚠ 警告: 飞书内部数据未更新！最新记录日期: {feishu_records[-1].get('date', 'N/A') if feishu_records else '无记录'}")
     print(f"  - 综合建议: {strategy['composite_advice']['action']}")
     print(f"  - HTML已内联数据（自包含可分享）")
     print(f"{'='*60}")
