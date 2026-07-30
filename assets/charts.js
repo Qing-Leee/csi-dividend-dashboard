@@ -56,15 +56,16 @@
 
   function axisTooltip(unitMap, digitMap) {
     return {
+      show: true,
       trigger: 'axis',
       confine: true,
-      appendToBody: false,
-      axisPointer: { type: 'cross' },
+      appendToBody: true,
+      axisPointer: { type: 'cross', lineStyle: { color: muted, type: 'dashed' }, label: { show: true } },
       backgroundColor: 'rgba(255,255,255,0.96)',
       borderColor: rule,
       borderWidth: 1,
       textStyle: { color: ink, fontSize: 12 },
-      extraCssText: 'box-shadow:0 8px 24px rgba(15,23,42,.12);border-radius:8px;padding:8px 10px;',
+      extraCssText: 'box-shadow:0 8px 24px rgba(15,23,42,.12);border-radius:8px;padding:8px 10px;z-index:99999;',
       formatter: function(params) {
         if (!params || !params.length) return '';
         var lines = ['<div style="font-weight:700;margin-bottom:4px;">' + params[0].axisValue + '</div>'];
@@ -385,6 +386,10 @@
     var gaugePE = echarts.init(document.getElementById('gauge-pe'), null, { renderer: 'svg' });
     gaugePE.setOption({
       animation: false,
+      tooltip: {
+        show: true,
+        formatter: '{b}: {c}'
+      },
       series: [{
         type: 'gauge',
         min: 5,
@@ -421,6 +426,10 @@
     var gaugeDiv = echarts.init(document.getElementById('gauge-dividend'), null, { renderer: 'svg' });
     gaugeDiv.setOption({
       animation: false,
+      tooltip: {
+        show: true,
+        formatter: '{b}: {c}%'
+      },
       series: [{
         type: 'gauge',
         min: 0,
@@ -457,6 +466,10 @@
     var gaugeSpread = echarts.init(document.getElementById('gauge-spread'), null, { renderer: 'svg' });
     gaugeSpread.setOption({
       animation: false,
+      tooltip: {
+        show: true,
+        formatter: '{b}: {c}%'
+      },
       series: [{
         type: 'gauge',
         min: 0,
@@ -493,6 +506,10 @@
     var gaugeRSI = echarts.init(document.getElementById('gauge-rsi'), null, { renderer: 'svg' });
     gaugeRSI.setOption({
       animation: false,
+      tooltip: {
+        show: true,
+        formatter: '{b}: {c}'
+      },
       series: [{
         type: 'gauge',
         min: 0,
