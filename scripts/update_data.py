@@ -211,10 +211,11 @@ def fetch_feishu_records():
     方式1：直接调用 lark-cli +record-list 获取最新数据
     方式2：回退到现有 market_data.json 中的记录
     
-    Returns: (records, is_fresh, message)
+    Returns: (records, is_fresh, message, auth_needed)
     - records: list of parsed records
     - is_fresh: True if data was freshly fetched from Feishu
     - message: status description
+    - auth_needed: True if lark-cli auth is required (认证过期或未授权)
     """
     # 方式1：调用 lark-cli +record-list 获取飞书Base数据
     try:
@@ -227,8 +228,52 @@ def fetch_feishu_records():
              "--json"],
             capture_output=True, text=True, timeout=30
         )
+        
+        # 检查 lark-cli 输出中是否包含认证相关错误
+        combined_output = (result.stdout or "") + (result.stderr or "")
+        
+        # 认证/授权类错误特征
+        auth_error_patterns = [
+            "auth",
+            "token",
+            "credential",
+            "not authorized",
+            "permission denied",
+            "login required",
+            "scope",
+            "未授权",
+            "认证",
+            "登录",
+            "permission_violations",
+            "invalid_argument",
+        ]
+        is_auth_error = (
+            result.returncode != 0 and
+            any(p.lower() in combined_output.lower() for p in auth_error_patterns)
+        )
+        
         if result.returncode == 0 and result.stdout.strip():
             cli_data = json.loads(result.stdout)
+            # 检查 lark-cli 返回的 JSON 中是否有错误
+            if cli_data.get("ok") == False:
+                err_info = cli_data.get("error", {})
+                err_type = err_info.get("type", "")
+                err_msg = err_info.get("message", "")
+                err_hint = err_info.get("hint", "")
+                print(f"[Feishu] ✗ lark-cli返回错误: type={err_type}, msg={err_msg}")
+                if err_hint:
+                    print(f"[Feishu] ✗ hint: {err_hint}")
+                
+                # 判断是否认证类错误
+                auth_keywords = ["auth", "token", "credential", "permission", "scope", "login", "not authorized"]
+                is_auth_error = any(k in (err_type + err_msg).lower() for k in auth_keywords)
+                
+                if is_auth_error:
+                    print(f"[Feishu] 🔑 检测到认证/授权问题，需要用户重新认证！")
+                    return _fallback_records(f"认证失败: {err_msg}", auth_needed=True)
+                else:
+                    return _fallback_records(f"lark-cli错误: {err_msg}", auth_needed=False)
+            
             records = parse_feishu_cli_records(cli_data)
             if records:
                 latest_date = records[-1].get("date", "unknown")
@@ -239,16 +284,25 @@ def fetch_feishu_records():
                         json.dump(records, f, ensure_ascii=False, indent=2)
                 except:
                     pass
-                return records, True, f"lark-cli实时获取({latest_date})"
+                return records, True, f"lark-cli实时获取({latest_date})", False
             else:
                 print(f"[Feishu] ✗ lark-cli返回数据但解析为0条记录")
         else:
-            err_msg = result.stderr[:300] if result.stderr else "无stderr输出"
+            err_msg = result.stderr[:500] if result.stderr else "无stderr输出"
             print(f"[Feishu] ✗ lark-cli失败(返回码={result.returncode}): {err_msg}")
+            
+            if is_auth_error:
+                print(f"[Feishu] 🔑 检测到认证/授权问题，需要用户重新认证！")
+                return _fallback_records(f"认证失败: {err_msg[:200]}", auth_needed=True)
     except Exception as e:
         print(f"[Feishu] ✗ lark-cli调用异常: {e}")
     
     # 方式2：回退到现有market_data.json中的记录
+    return _fallback_records("lark-cli调用异常", auth_needed=False)
+
+
+def _fallback_records(reason, auth_needed=False):
+    """回退到缓存数据，返回标准三元组+auth_needed"""
     if os.path.exists(OUTPUT_PATH):
         try:
             with open(OUTPUT_PATH, 'r') as f:
@@ -257,12 +311,12 @@ def fetch_feishu_records():
             latest_date = records[-1].get("date", "unknown") if records else "无记录"
             print(f"[Feishu] ⚠ 回退到缓存数据: {len(records)} 条记录, 最新日期: {latest_date}")
             print(f"[Feishu] ⚠ 警告: 飞书数据未更新！使用的是旧数据，最新记录日期为 {latest_date}")
-            return records, False, f"回退到缓存数据(最新:{latest_date})"
+            return records, False, f"回退到缓存数据(最新:{latest_date})", auth_needed
         except:
             pass
     
     print("[Feishu] ✗ ERROR: 无法获取任何飞书记录")
-    return [], False, "获取失败"
+    return [], False, "获取失败", auth_needed
 
 def parse_feishu_cli_records(cli_data):
     """解析lark-cli +record-list返回的飞书Base记录，转换为看板所需格式"""
@@ -621,7 +675,7 @@ def main():
     
     # ===== Step 5: 内部飞书数据同步 =====
     print(f"\n[Feishu] 开始同步飞书定投复盘记录...")
-    feishu_records, feishu_fresh, feishu_msg = fetch_feishu_records()
+    feishu_records, feishu_fresh, feishu_msg, feishu_auth_needed = fetch_feishu_records()
     print(f"[Feishu] 获取 {len(feishu_records)} 条定投记录 (数据状态: {'✓最新' if feishu_fresh else '⚠旧数据'})")
     
     # ===== Step 6: 股债利差 =====
@@ -682,7 +736,8 @@ def main():
                     "is_fresh": feishu_fresh,
                     "status": feishu_msg,
                     "last_record_date": feishu_records[-1].get("date") if feishu_records else None,
-                    "record_count": len(feishu_records)
+                    "record_count": len(feishu_records),
+                    "auth_needed": feishu_auth_needed
                 }
             }
         },
@@ -780,6 +835,8 @@ def main():
     print(f"  - 飞书记录: {len(feishu_records)} 条 ({'✓最新数据' if feishu_fresh else '⚠回退旧数据'})")
     if not feishu_fresh:
         print(f"  ⚠ 警告: 飞书内部数据未更新！最新记录日期: {feishu_records[-1].get('date', 'N/A') if feishu_records else '无记录'}")
+        if feishu_auth_needed:
+            print(f"  🔑 根因: lark-cli 认证过期或未授权，请执行重新认证流程！")
     print(f"  - 综合建议: {strategy['composite_advice']['action']}")
     print(f"  - HTML已内联数据（自包含可分享）")
     print(f"{'='*60}")

@@ -12,6 +12,7 @@
 - 不创建新的交付物。
 - 只更新固定看板入口 index.html 和 assets/market_data.json。
 - 运行完成后输出数据小结和看板链接，可直接点击查看。
+- 当 lark-cli 认证过期时，自动生成重新认证提醒，并嵌入认证流程指引。
 """
 
 import json
@@ -27,6 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 UPDATE_SCRIPT = BASE_DIR / "scripts" / "update_data.py"
 DATA_PATH = BASE_DIR / "assets" / "market_data.json"
 DEFAULT_PREVIEW_DIR = Path("/workspace/csi-dividend-dashboard-preview")
+
+# 飞书 Base 配置（用于认证提示）
+FEISHU_BASE_TOKEN = "Z8yYbFOcZaBaFMsmt6xcnaFpnlf"
+FEISHU_TABLE_ID = "tblJQJWinJCenmID"
 
 
 def run_update():
@@ -55,6 +60,7 @@ def latest_record(data):
 
 
 def compose_summary(data):
+    """构建推送摘要，包含数据小结和认证提醒"""
     meta = data.get("meta") or {}
     valuation = (data.get("index_valuation") or {}).get("csi_dividend") or {}
     technical = data.get("technical") or {}
@@ -63,6 +69,7 @@ def compose_summary(data):
     record = latest_record(data)
     freshness = meta.get("data_freshness") or {}
     feishu_freshness = freshness.get("feishu") or {}
+    auth_needed = feishu_freshness.get("auth_needed", False)
 
     dashboard_url = os.environ.get(
         "DASHBOARD_PUBLIC_URL",
@@ -82,16 +89,44 @@ def compose_summary(data):
         f"外部数据截至：{meta.get('market_date', '--')}",
     ]
 
-    # Feishu data freshness warning
-    if not feishu_freshness.get("is_fresh", True):
+    # ===== 认证过期提醒（优先级最高）=====
+    if auth_needed:
+        last_date = feishu_freshness.get("last_record_date", "N/A")
+        lines.extend([
+            "",
+            "=" * 50,
+            "🔑 飞书认证已过期，内部数据无法更新！",
+            "=" * 50,
+            "",
+            f"问题：lark-cli 认证已过期或未授权，飞书内部数据使用了旧缓存（最新记录：{last_date}）",
+            "影响：看板中的累计投入、持有市值、收益率等内部数据未更新",
+            "",
+            "请按以下步骤重新认证：",
+            "",
+            "步骤1：打开 TRAE AI Agent 对话窗口",
+            "步骤2：发送以下指令：",
+            f'  lark-cli auth login --scope "bitable:bitable" --as user',
+            "",
+            "步骤3：认证窗口会弹出授权链接，点击打开并完成飞书扫码授权",
+            "步骤4：授权成功后，重新触发看板数据更新：",
+            f"  python3 scripts/run_update_and_notify.py",
+            "",
+            "认证成功后，飞书内部数据将在下次更新时自动同步最新记录。",
+            "=" * 50,
+        ])
+
+    # ===== 普通数据未更新提醒 =====
+    elif not feishu_freshness.get("is_fresh", True):
         last_date = feishu_freshness.get("last_record_date", "N/A")
         lines.extend([
             "",
             f"⚠ 内部数据未更新：飞书数据同步失败，当前使用旧数据（最新记录：{last_date}）",
         ])
 
+    # ===== 数据小结 =====
     lines.extend([
         "",
+        "📊 数据小结：",
         f"累计投入：¥{record.get('cum_invest', 0):,.0f}",
         f"持有市值：¥{record.get('mkt_value', 0):,.2f}",
         f"累计收益率：{record.get('cum_return_pct', 0):+.2f}%",
@@ -104,6 +139,14 @@ def compose_summary(data):
         f"综合建议：{composite.get('action', '--')}",
         f"建议说明：{composite.get('detail', '--')}",
     ])
+
+    # ===== 内部数据状态标识 =====
+    if auth_needed:
+        lines.extend(["", "🔴 内部数据状态：认证过期·需重新认证"])
+    elif not feishu_freshness.get("is_fresh", True):
+        lines.extend(["", "🟡 内部数据状态：使用旧缓存·非认证问题"])
+    else:
+        lines.extend(["", "🟢 内部数据状态：已同步最新"])
 
     if preview_url:
         lines.extend(["", f"内置预览链接：[点击查看看板]({preview_url})"])
@@ -182,6 +225,25 @@ def main():
     print("=" * 60)
     print(summary)
     print("=" * 60)
+
+    # 检查是否需要认证提醒
+    freshness = (data.get("meta") or {}).get("data_freshness") or {}
+    feishu_freshness = freshness.get("feishu") or {}
+    auth_needed = feishu_freshness.get("auth_needed", False)
+
+    if auth_needed:
+        print()
+        print("🔑" * 25)
+        print("🔑  飞书认证已过期！请重新认证后再次运行更新")
+        print("🔑" * 25)
+        print()
+        print("重新认证命令：")
+        print('  lark-cli auth login --scope "bitable:bitable" --as user')
+        print()
+        print("认证成功后重新运行：")
+        print("  python3 scripts/run_update_and_notify.py")
+        print()
+
     print("[DONE] 固定看板已更新")
     print("=" * 60)
 
