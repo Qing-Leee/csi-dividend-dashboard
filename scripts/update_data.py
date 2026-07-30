@@ -559,8 +559,49 @@ def inline_data_into_html(data):
         else:
             print(f"[HTML] WARN: 未找到 __MARKET_DATA__ 标签，跳过数据内联")
         
-        # 清理 ECharts tooltip DOM 污染
-        # 找到最后一个 </script> 标签
+        # 清理 ECharts 渲染残留（避免重复图表）
+        # 方法：定位已知的 chart/gauge container，清空其内部内容
+        # 避免全局扫描 style 属性导致误删其他区域（如策略卡片中的 JS 字符串）
+        container_ids = [
+            'chart-investment-timeline', 'chart-cumulative', 'chart-pe-div-trend',
+            'chart-stock-bond', 'chart-rsi-detail',
+            'gauge-pe', 'gauge-dividend', 'gauge-spread', 'gauge-rsi'
+        ]
+        
+        cleaned = 0
+        for cid in container_ids:
+            pattern = rf'(<div[^>]*id="{cid}"[^>]*?)\s*_echarts_instance_="[^"]*"'
+            html = re.sub(pattern, r'\1', html)
+            
+            # 找到 container 的开始标签，然后清空其内部
+            start_match = re.search(rf'<div[^>]*id="{cid}"[^>]*>', html)
+            if start_match:
+                start_pos = start_match.end()
+                depth = 1
+                i = start_pos
+                while i < len(html) and depth > 0:
+                    if html[i:i+5] == '<div' and html[i+5:i+6] != '/':
+                        depth += 1
+                        i += 5
+                    elif html[i:i+6] == '</div>':
+                        depth -= 1
+                        if depth == 0:
+                            break
+                        i += 6
+                    else:
+                        i += 1
+                if depth == 0:
+                    # 只保留开始标签和结束标签，清空中间内容
+                    html = html[:start_pos] + html[i:]
+                    cleaned += 1
+        
+        if cleaned:
+            print(f"[HTML] 清理了 {cleaned} 个 chart/gauge container 的 ECharts 渲染残留")
+        
+        # 移除空的 ECharts 辅助 div（全局）
+        html = re.sub(r'<div class=""></div>', '', html)
+        
+        # 清理 ECharts tooltip DOM 污染（最后一个 </script> 和 </body> 之间的 div）
         last_script_end = html.rfind('</script>')
         if last_script_end != -1:
             after_scripts = html[last_script_end:]
@@ -568,7 +609,6 @@ def inline_data_into_html(data):
             if body_end != -1:
                 between = after_scripts[:body_end]
                 if '<div' in between:
-                    # 移除所有 div 标签（ECharts tooltip 残留）
                     clean = re.sub(r'<div[^>]*>.*?</div>', '', between, flags=re.DOTALL)
                     clean = re.sub(r'<div[^>]*/>', '', clean)
                     clean = clean.strip()
