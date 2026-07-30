@@ -1,6 +1,6 @@
 {
   "meta": {
-    "update_time": "2026-07-30 07:44:55",
+    "update_time": "2026-07-30 03:22:52",
     "period_label": "盘前",
     "is_trading_day": true,
     "data_sources": {
@@ -425,7 +425,7 @@
   },
   "technical": {
     "date": "2026-07-29",
-    "rsi24": 55.27,
+    "rsi24": 54.66,
     "source": "东方财富历史行情收盘价计算",
     "method": "RSI24=Wilder/RMA，基于中证红利日收盘价"
   },
@@ -834,8 +834,8 @@
         },
         {
           "date": "2026-07-30",
-          "close": 5571.39,
-          "rsi24": 55.27
+          "close": 5552.95,
+          "rsi24": 54.66
         }
       ]
     }
@@ -1139,7 +1139,7 @@
     },
     "rsi_advice": {
       "action": "正常区间",
-      "detail": "RSI24=55.27 处于正常区间，无明显信号",
+      "detail": "RSI24=54.66 处于正常区间，无明显信号",
       "level": "hold"
     },
     "composite_advice": {

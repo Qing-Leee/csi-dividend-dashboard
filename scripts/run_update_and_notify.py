@@ -163,7 +163,7 @@ def sync_preview_folder():
     preview_dir = Path(os.environ.get("DASHBOARD_PREVIEW_DIR", str(DEFAULT_PREVIEW_DIR))).resolve()
     preview_dir.mkdir(parents=True, exist_ok=True)
 
-    for file_name in ["index.html", "csi-dividend-dca-dashboard.html"]:
+    for file_name in ["index.html"]:
         src = BASE_DIR / file_name
         if src.exists():
             shutil.copy2(src, preview_dir / file_name)
