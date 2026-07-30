@@ -559,9 +559,17 @@ def inline_data_into_html(data):
         else:
             print(f"[HTML] WARN: 未找到 __MARKET_DATA__ 标签，跳过数据内联")
         
+        # 清理 ECharts tooltip DOM 污染（chart-container 后面残留的隐藏 div）
+        # 这些 div 是 ECharts 使用 appendToBody:true 时生成的，保存在 HTML 源码中会破坏结构
+        tooltip_pattern = r'(<div class="chart-container[^"]*" id="[^"]*"></div>)((?:<div style="position: absolute[^"]*"[^>]*></div>)+)'
+        tooltip_count_before = html.count('position: absolute !important; visibility: hidden')
+        html = re.sub(tooltip_pattern, r'\1', html)
+        tooltip_removed = tooltip_count_before - html.count('position: absolute !important; visibility: hidden')
+        if tooltip_removed:
+            print(f"[HTML] 清理了 {tooltip_removed} 个 chart-container 后的 tooltip 污染 div")
+
         # 清理 ECharts 渲染残留（避免重复图表）
         # 方法：定位已知的 chart/gauge container，清空其内部内容
-        # 避免全局扫描 style 属性导致误删其他区域（如策略卡片中的 JS 字符串）
         container_ids = [
             'chart-investment-timeline', 'chart-cumulative', 'chart-pe-div-trend',
             'chart-stock-bond', 'chart-rsi-detail',
@@ -570,6 +578,7 @@ def inline_data_into_html(data):
         
         cleaned = 0
         for cid in container_ids:
+            # 移除 _echarts_instance_ 属性
             pattern = rf'(<div[^>]*id="{cid}"[^>]*?)\s*_echarts_instance_="[^"]*"'
             html = re.sub(pattern, r'\1', html)
             
