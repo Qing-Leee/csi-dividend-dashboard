@@ -196,7 +196,7 @@ def push_to_github():
         subprocess.run(cmd, cwd=str(BASE_DIR), text=True, capture_output=True, timeout=30)
 
     cmds = [
-        ["git", "add", "index.html", "assets/market_data.json"],
+        ["git", "add", "index.html", "assets/market_data.json", "scripts/update_data.py", "scripts/run_update_and_notify.py"],
         ["git", "commit", "-m", f"chore: auto-update dashboard data {datetime.now().strftime('%Y-%m-%d %H:%M')}"],
         ["git", "push", remote_url, "main"],
     ]
