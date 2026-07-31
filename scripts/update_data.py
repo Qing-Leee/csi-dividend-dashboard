@@ -656,6 +656,16 @@ def main():
     
     # ===== Step 1: 东财历史K线 =====
     klines = fetch_eastmoney_kline(CSI_CODE, days=90)
+    
+    # 东财K线获取失败时，回退到现有 market_data.json 中的 public_history
+    if not klines and existing_data:
+        existing_public = existing_data.get("public_history", {}).get("csi_dividend", {})
+        klines = existing_public.get("data", [])
+        if klines:
+            print(f"[EastMoney] ⚠ K线获取失败，回退到现有 public_history 数据: {len(klines)} 条")
+        else:
+            print(f"[EastMoney] ⚠ K线获取失败，且无现有 public_history 数据")
+    
     closes = [k["close"] for k in klines]
     dates = [k["date"] for k in klines]
     

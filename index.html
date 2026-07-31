@@ -2124,8 +2124,13 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
     var publicIndexRows = (publicHistory.csi_dividend && publicHistory.csi_dividend.data) ? publicHistory.csi_dividend.data : [];
     var publicIndexByDate = {};
     publicIndexRows.forEach(function(row) { publicIndexByDate[row.record_date || row.date] = row.close; });
+    // 公开行情缺失时，使用 index_spot.latest 作为兜底，确保指数点位线不中断
+    var spotIndex = (data && data.index_spot && data.index_spot.csi_dividend) ? data.index_spot.csi_dividend.latest : 5450;
+    var lastFallbackIndex = fallbackIndexLevels.length ? fallbackIndexLevels[fallbackIndexLevels.length - 1] : spotIndex;
     var indexLevels = records.length ? records.map(function(r, i) {
-      return publicIndexByDate[r.date] != null ? publicIndexByDate[r.date] : fallbackIndexLevels[i];
+      if (publicIndexByDate[r.date] != null) return publicIndexByDate[r.date];
+      if (i < fallbackIndexLevels.length) return fallbackIndexLevels[i];
+      return lastFallbackIndex;
     }) : fallbackIndexLevels;
     var cumInvest = extractArray(records, 'cum_invest', fallbackCumInvest);
     var cumShares = extractArray(records, 'cum_shares', fallbackCumShares);
