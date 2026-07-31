@@ -890,7 +890,7 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
 </script>
 <script>window.__MARKET_DATA__ = {
   "meta": {
-    "update_time": "2026-07-30 08:55:01",
+    "update_time": "2026-07-31 01:08:21",
     "period_label": "盘前",
     "is_trading_day": true,
     "data_sources": {
@@ -925,15 +925,15 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
     },
     "update_schedule": "每日 08:00(盘前) / 14:30(盘中) 自动更新",
     "next_update": "14:30 盘中版（收盘前策略信号）",
-    "market_date": "2026-07-29",
+    "market_date": "2026-07-30",
     "valuation_policy": "中证官网指数估值Excel，计算使用P/E2与D/P2",
-    "display_policy": "外部公开数据统一展示至2026-07-29，避免盘中实时波动",
+    "display_policy": "外部公开数据统一展示至2026-07-30，避免盘中实时波动",
     "data_freshness": {
       "feishu": {
         "is_fresh": true,
-        "status": "lark-cli实时获取(2026-07-30)",
-        "last_record_date": "2026-07-30",
-        "record_count": 10,
+        "status": "lark-cli实时获取(2026-07-31)",
+        "last_record_date": "2026-07-31",
+        "record_count": 11,
         "auth_needed": false
       }
     }
@@ -967,9 +967,9 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
   },
   "index_valuation": {
     "csi_dividend": {
-      "pe2": 10.81,
-      "div_yield2": 4.4,
-      "date": "2026-07-29",
+      "pe2": 10.93,
+      "div_yield2": 4.36,
+      "date": "2026-07-30",
       "source": "中证指数有限公司指数估值Excel",
       "source_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/indicator/000922indicator.xls",
       "policy": "计算用指标：市盈率2（计算用股本）P/E2、股息率2（计算用股本）D/P2"
@@ -983,11 +983,6 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
       "source_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/indicator/000922indicator.xls",
       "policy": "日变动计算使用市盈率2（计算用股本）P/E2、股息率2（计算用股本）D/P2",
       "data": [
-        {
-          "date": "2026-07-02",
-          "pe2": 10.11,
-          "div_yield2": 4.72
-        },
         {
           "date": "2026-07-03",
           "pe2": 10.21,
@@ -1082,6 +1077,11 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
           "date": "2026-07-29",
           "pe2": 10.81,
           "div_yield2": 4.4
+        },
+        {
+          "date": "2026-07-30",
+          "pe2": 10.93,
+          "div_yield2": 4.36
         }
       ]
     }
@@ -1314,7 +1314,7 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
     }
   },
   "technical": {
-    "date": "2026-07-29",
+    "date": "2026-07-30",
     "rsi24": 54.66,
     "source": "东方财富历史行情收盘价计算",
     "method": "RSI24=Wilder/RMA，基于中证红利日收盘价"
@@ -1737,13 +1737,6 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
       "source": "中证官网指数估值Excel + 每日国债收益率",
       "data": [
         {
-          "date": "2026-07-02",
-          "div_yield2": 4.72,
-          "y10": 1.741,
-          "spread": 2.98,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
           "date": "2026-07-03",
           "div_yield2": 4.67,
           "y10": 1.7463,
@@ -1870,10 +1863,10 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
           "bond_source": "中央国债登记结算有限责任公司"
         },
         {
-          "date": "2026-07-29",
-          "div_yield2": 4.4,
+          "date": "2026-07-30",
+          "div_yield2": 4.36,
           "y10": 1.725,
-          "spread": 2.68,
+          "spread": 2.64,
           "bond_source": "Investing.com (英为财情)"
         }
       ]
@@ -2009,22 +2002,35 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
       "cum_return_pct": 2.63,
       "pnl": 105.23225,
       "avg_cost": 1.242317046
+    },
+    {
+      "date": "2026-07-31",
+      "action": "观察",
+      "invest": 0.0,
+      "shares": 0.0,
+      "nav": 1.289,
+      "cum_invest": 4000.0,
+      "cum_shares": 3219.79,
+      "mkt_value": 4150.30931,
+      "cum_return_pct": 3.76,
+      "pnl": 150.30931,
+      "avg_cost": 1.242317046
     }
   ],
   "strategy_advice": {
     "pe_advice": {
       "action": "谨慎",
-      "detail": "PE 10.81 偏高，建议减少定投或暂停",
+      "detail": "PE 10.93 偏高，建议减少定投或暂停",
       "level": "caution"
     },
     "div_advice": {
       "action": "正常区间",
-      "detail": "股息率 4.4% 处于正常区间，可继续持有",
+      "detail": "股息率 4.36% 处于正常区间，可继续持有",
       "level": "hold"
     },
     "spread_advice": {
       "action": "买入",
-      "detail": "股债利差 2.68% 较高，适合分批买入",
+      "detail": "股债利差 2.64% 较高，适合分批买入",
       "level": "buy"
     },
     "rsi_advice": {
@@ -2038,7 +2044,7 @@ var Fr={},Gr={};var Wr,Hr=function(){function t(t,e,n){var i=this;this._sleepAft
       "level": "pause"
     },
     "composite_score": -1,
-    "spread": 2.68
+    "spread": 2.64
   }
 };</script>
 <script>
