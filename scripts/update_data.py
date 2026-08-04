@@ -853,19 +853,19 @@ def main():
     feishu_records, feishu_fresh, feishu_msg, feishu_auth_needed = fetch_feishu_records()
     print(f"[Feishu] 获取 {len(feishu_records)} 条定投记录 (数据状态: {'✓最新' if feishu_fresh else '⚠旧数据'})")
     
-    # ===== Step 5.5: 用 akshare 补全缺失的国债历史（对齐估值日期）=====
+    # ===== Step 5.5: 用中债登接口补全缺失的国债历史（对齐估值日期）=====
     val_dates = [v["date"] for v in val_history] if val_history else []
-    akshare_bond_history = fetch_bond_yield_history(val_dates)
-    if akshare_bond_history:
-        akshare_dates = {b["date"] for b in akshare_bond_history}
+    chinabond_bond_history = fetch_bond_yield_history(val_dates)
+    if chinabond_bond_history:
+        bond_dates_new = {b["date"] for b in chinabond_bond_history}
         existing_dates = {b["date"] for b in bond_history}
-        for b in akshare_bond_history:
+        for b in chinabond_bond_history:
             if b["date"] not in existing_dates:
                 bond_history.append(b)
-        akshare_map = {b["date"]: b["y10"] for b in akshare_bond_history}
+        bond_map_new = {b["date"]: b["y10"] for b in chinabond_bond_history}
         for b in bond_history:
-            if b["date"] in akshare_map:
-                b["y10"] = akshare_map[b["date"]]
+            if b["date"] in bond_map_new:
+                b["y10"] = bond_map_new[b["date"]]
                 b["source"] = "中央国债登记结算有限责任公司"
         bond_history.sort(key=lambda b: b["date"])
         print(f"[BondHistory] 合并后国债历史: {len(bond_history)} 条")
