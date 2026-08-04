@@ -1,6 +1,6 @@
 {
   "meta": {
-    "update_time": "2026-08-04 01:01:56",
+    "update_time": "2026-08-04 01:19:41",
     "period_label": "盘前",
     "is_trading_day": true,
     "data_sources": {
@@ -1320,18 +1320,17 @@
     }
   },
   "bond_yield": {
-    "date": "2026-07-28",
-    "y10": 1.725,
-    "source": "Investing.com (英为财情)",
-    "source_url": "https://cn.investing.com/rates-bonds/china-10-year-bond-yield",
-    "note": "按用户要求展示至2026-07-28昨日收盘口径"
+    "date": "2026-08-03",
+    "y10": 1.7169,
+    "source": "中债登国债收益率曲线(akshare)",
+    "source_url": "https://yield.chinabond.com.cn/",
+    "note": "实时抓取中债登国债收益率曲线，截至2026-08-03"
   },
   "bond_yield_history": {
     "china_10y": {
       "name": "中国10年期国债收益率",
-      "source": "中债登每日收益率曲线；2026-07-28 使用 Investing.com 昨日收盘值",
+      "source": "中债登国债收益率曲线(akshare实时抓取)；2026-08-03 最新值",
       "source_url": "https://yield.chinabond.com.cn/",
-      "investing_source_url": "https://cn.investing.com/rates-bonds/china-10-year-bond-yield",
       "data": [
         {
           "date": "2026-05-29",
@@ -1540,8 +1539,28 @@
         },
         {
           "date": "2026-07-28",
-          "y10": 1.725,
-          "source": "Investing.com (英为财情)"
+          "y10": 1.7351,
+          "source": "中央国债登记结算有限责任公司"
+        },
+        {
+          "date": "2026-07-29",
+          "y10": 1.7329,
+          "source": "中央国债登记结算有限责任公司"
+        },
+        {
+          "date": "2026-07-30",
+          "y10": 1.7196,
+          "source": "中央国债登记结算有限责任公司"
+        },
+        {
+          "date": "2026-07-31",
+          "y10": 1.7141,
+          "source": "中央国债登记结算有限责任公司"
+        },
+        {
+          "date": "2026-08-03",
+          "y10": 1.7169,
+          "source": "中央国债登记结算有限责任公司"
         }
       ]
     }
@@ -2067,16 +2086,37 @@
         {
           "date": "2026-07-28",
           "div_yield2": 4.47,
-          "y10": 1.725,
-          "spread": 2.74,
+          "y10": 1.7351,
+          "spread": 2.73,
+          "bond_source": "中央国债登记结算有限责任公司"
+        },
+        {
+          "date": "2026-07-29",
+          "div_yield2": 4.4,
+          "y10": 1.7329,
+          "spread": 2.67,
+          "bond_source": "中央国债登记结算有限责任公司"
+        },
+        {
+          "date": "2026-07-30",
+          "div_yield2": 4.36,
+          "y10": 1.7196,
+          "spread": 2.64,
+          "bond_source": "中央国债登记结算有限责任公司"
+        },
+        {
+          "date": "2026-07-31",
+          "div_yield2": 4.15,
+          "y10": 1.7141,
+          "spread": 2.44,
           "bond_source": "中央国债登记结算有限责任公司"
         },
         {
           "date": "2026-08-03",
           "div_yield2": 4.16,
-          "y10": 1.725,
+          "y10": 1.7169,
           "spread": 2.44,
-          "bond_source": "Investing.com (英为财情)"
+          "bond_source": "中债登国债收益率曲线(akshare)"
         }
       ]
     }
