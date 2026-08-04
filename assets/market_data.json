@@ -1,6 +1,6 @@
 {
   "meta": {
-    "update_time": "2026-08-03 01:38:18",
+    "update_time": "2026-08-04 01:01:56",
     "period_label": "盘前",
     "is_trading_day": true,
     "data_sources": {
@@ -35,15 +35,15 @@
     },
     "update_schedule": "每日 08:00(盘前) / 14:30(盘中) 自动更新",
     "next_update": "14:30 盘中版（收盘前策略信号）",
-    "market_date": "2026-07-31",
+    "market_date": "2026-08-03",
     "valuation_policy": "中证官网指数估值Excel，计算使用P/E2与D/P2",
-    "display_policy": "外部公开数据统一展示至2026-07-31，避免盘中实时波动",
+    "display_policy": "外部公开数据统一展示至2026-08-03，避免盘中实时波动",
     "data_freshness": {
       "feishu": {
         "is_fresh": true,
-        "status": "lark-cli实时获取(2026-07-31)",
-        "last_record_date": "2026-07-31",
-        "record_count": 11,
+        "status": "lark-cli实时获取(2026-08-04)",
+        "last_record_date": "2026-08-04",
+        "record_count": 12,
         "auth_needed": false
       }
     }
@@ -1200,9 +1200,9 @@
   },
   "index_valuation": {
     "csi_dividend": {
-      "pe2": 10.91,
-      "div_yield2": 4.15,
-      "date": "2026-07-31",
+      "pe2": 10.87,
+      "div_yield2": 4.16,
+      "date": "2026-08-03",
       "source": "中证指数有限公司指数估值Excel",
       "source_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/indicator/000922indicator.xls",
       "policy": "计算用指标：市盈率2（计算用股本）P/E2、股息率2（计算用股本）D/P2"
@@ -1216,11 +1216,6 @@
       "source_url": "https://oss-ch.csindex.com.cn/static/html/csindex/public/uploads/file/autofile/indicator/000922indicator.xls",
       "policy": "日变动计算使用市盈率2（计算用股本）P/E2、股息率2（计算用股本）D/P2",
       "data": [
-        {
-          "date": "2026-07-06",
-          "pe2": 10.42,
-          "div_yield2": 4.57
-        },
         {
           "date": "2026-07-07",
           "pe2": 10.28,
@@ -1315,6 +1310,11 @@
           "date": "2026-07-31",
           "pe2": 10.91,
           "div_yield2": 4.15
+        },
+        {
+          "date": "2026-08-03",
+          "pe2": 10.87,
+          "div_yield2": 4.16
         }
       ]
     }
@@ -1547,7 +1547,7 @@
     }
   },
   "technical": {
-    "date": "2026-07-31",
+    "date": "2026-08-03",
     "rsi24": 54.6,
     "source": "东方财富历史行情收盘价计算",
     "method": "RSI24=Wilder/RMA，基于中证红利日收盘价"
@@ -1960,13 +1960,6 @@
       "source": "中证官网指数估值Excel + 每日国债收益率",
       "data": [
         {
-          "date": "2026-07-06",
-          "div_yield2": 4.57,
-          "y10": 1.7379,
-          "spread": 2.83,
-          "bond_source": "中央国债登记结算有限责任公司"
-        },
-        {
           "date": "2026-07-07",
           "div_yield2": 4.64,
           "y10": 1.7406,
@@ -2079,10 +2072,10 @@
           "bond_source": "中央国债登记结算有限责任公司"
         },
         {
-          "date": "2026-07-31",
-          "div_yield2": 4.15,
+          "date": "2026-08-03",
+          "div_yield2": 4.16,
           "y10": 1.725,
-          "spread": 2.43,
+          "spread": 2.44,
           "bond_source": "Investing.com (英为财情)"
         }
       ]
@@ -2231,22 +2224,35 @@
       "cum_return_pct": 3.76,
       "pnl": 150.30931,
       "avg_cost": 1.242317046
+    },
+    {
+      "date": "2026-08-04",
+      "action": "观察",
+      "invest": 0.0,
+      "shares": 0.0,
+      "nav": 1.2832,
+      "cum_invest": 4000.0,
+      "cum_shares": 3219.79,
+      "mkt_value": 4131.634528,
+      "cum_return_pct": 3.29,
+      "pnl": 131.634528,
+      "avg_cost": 1.242317046
     }
   ],
   "strategy_advice": {
     "pe_advice": {
       "action": "谨慎",
-      "detail": "PE 10.91 偏高，建议减少定投或暂停",
+      "detail": "PE 10.87 偏高，建议减少定投或暂停",
       "level": "caution"
     },
     "div_advice": {
       "action": "正常区间",
-      "detail": "股息率 4.15% 处于正常区间，可继续持有",
+      "detail": "股息率 4.16% 处于正常区间，可继续持有",
       "level": "hold"
     },
     "spread_advice": {
       "action": "持有",
-      "detail": "股债利差 2.43% 偏低，吸引力下降",
+      "detail": "股债利差 2.44% 偏低，吸引力下降",
       "level": "hold"
     },
     "rsi_advice": {
@@ -2260,6 +2266,6 @@
       "level": "pause"
     },
     "composite_score": -2,
-    "spread": 2.43
+    "spread": 2.44
   }
 }
