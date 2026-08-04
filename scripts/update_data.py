@@ -177,61 +177,90 @@ def fetch_csi_valuation(code="000922"):
         print(f"[CSI] ERROR: {e}")
         return None
 
-# ===== Data Source 3: Bond Yield (中债登国债收益率曲线) =====
+# ===== Data Source 3: Bond Yield (中债登国债收益率曲线，纯标准库) =====
+
+BOND_HISTORY_URL = "https://yield.chinabond.com.cn/cbweb-pbc-web/pbc/historyQuery"
+
+def _fetch_chinabond_yield_raw(start_date, end_date):
+    """
+    直接请求中债登官网收益率曲线接口，解析HTML表格。
+    纯标准库实现，无需安装任何第三方依赖。
+    返回: [{"date": "2026-08-03", "y10": 1.7169, "curve": "中债国债收益率曲线"}, ...]
+    """
+    import urllib.request, urllib.parse, ssl, re
+
+    params = {
+        'startDate': start_date,
+        'endDate': end_date,
+        'gjqx': '0',
+        'qxId': 'ycqx',
+        'locale': 'cn_ZH',
+    }
+    url = BOND_HISTORY_URL + '?' + urllib.parse.urlencode(params)
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Referer': 'https://yield.chinabond.com.cn/',
+    }
+
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    req = urllib.request.Request(url, headers=headers)
+    with urllib.request.urlopen(req, timeout=20, context=ctx) as resp:
+        html = resp.read().decode('utf-8')
+
+    # 解析HTML表格
+    rows = re.findall(r'<tr[^>]*>(.*?)</tr>', html, re.DOTALL)
+    result = []
+    for row in rows:
+        cells = re.findall(r'<td[^>]*>(.*?)</td>', row, re.DOTALL)
+        if not cells:
+            continue
+        clean_cells = [re.sub(r'<[^>]+>', '', c).strip() for c in cells]
+        # 中债国债收益率曲线行：[曲线名称, 日期, 3月, 6月, 1年, 3年, 5年, 7年, 10年, 30年]
+        if len(clean_cells) >= 9 and clean_cells[0] == '中债国债收益率曲线':
+            date_str = clean_cells[1]
+            y10_str = clean_cells[8]
+            try:
+                y10 = round(float(y10_str), 4)
+                result.append({"date": date_str, "y10": y10})
+            except (ValueError, IndexError):
+                continue
+
+    return result
+
 
 def fetch_bond_yield():
     """
     抓取十年期国债收益率。
-    主数据源：akshare bond_china_yield（中债登国债收益率曲线），实时抓取。
+    主数据源：中债登官网收益率曲线接口（纯标准库，无需安装依赖）。
     回退数据源：本地缓存 /tmp/bond_yield_investing.json。
     最终回退：默认值1.725（并标记为回退）。
     """
-    # 方式1：akshare 实时抓取中债登国债收益率曲线
+    # 方式1：直接请求中债登官网
     try:
-        import akshare as ak
-        end_date = datetime.now().strftime("%Y%m%d")
-        start_date = (datetime.now() - timedelta(days=15)).strftime("%Y%m%d")
-        df = ak.bond_china_yield(start_date=start_date, end_date=end_date)
-        gov_df = df[df["曲线名称"] == "中债国债收益率曲线"].copy()
-        if not gov_df.empty:
-            gov_df = gov_df.sort_values("日期")
-            latest_row = gov_df.iloc[-1]
-            y10 = round(float(latest_row["10年"]), 4)
-            date_str = str(latest_row["日期"])[:10]
-            print(f"[Bond] ✓ akshare实时获取: y10={y10}%, date={date_str}")
+        end_date = datetime.now().strftime("%Y-%m-%d")
+        start_date = (datetime.now() - timedelta(days=15)).strftime("%Y-%m-%d")
+        rows = _fetch_chinabond_yield_raw(start_date, end_date)
+        if rows:
+            # 取最新日期
+            rows.sort(key=lambda r: r["date"])
+            latest = rows[-1]
+            y10 = latest["y10"]
+            date_str = latest["date"]
+            print(f"[Bond] ✓ 中债登实时获取: y10={y10}%, date={date_str}")
             try:
                 with open(BOND_CACHE, 'w') as f:
                     json.dump({"y10": y10, "date": date_str}, f)
             except Exception:
                 pass
-            return {"y10": y10, "date": date_str, "source": "中债登国债收益率曲线(akshare)"}
+            return {"y10": y10, "date": date_str, "source": "中债登国债收益率曲线"}
         else:
-            print("[Bond] akshare返回数据但无国债曲线行")
-    except ImportError:
-        print("[Bond] akshare未安装，尝试安装...")
-        try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "akshare", "--break-system-packages", "-q"])
-            import akshare as ak
-            end_date = datetime.now().strftime("%Y%m%d")
-            start_date = (datetime.now() - timedelta(days=15)).strftime("%Y%m%d")
-            df = ak.bond_china_yield(start_date=start_date, end_date=end_date)
-            gov_df = df[df["曲线名称"] == "中债国债收益率曲线"].copy()
-            if not gov_df.empty:
-                gov_df = gov_df.sort_values("日期")
-                latest_row = gov_df.iloc[-1]
-                y10 = round(float(latest_row["10年"]), 4)
-                date_str = str(latest_row["日期"])[:10]
-                print(f"[Bond] ✓ akshare实时获取(安装后): y10={y10}%, date={date_str}")
-                try:
-                    with open(BOND_CACHE, 'w') as f:
-                        json.dump({"y10": y10, "date": date_str}, f)
-                except Exception:
-                    pass
-                return {"y10": y10, "date": date_str, "source": "中债登国债收益率曲线(akshare)"}
-        except Exception as e2:
-            print(f"[Bond] akshare安装/调用失败: {e2}")
+            print("[Bond] 中债登接口返回数据但无国债曲线行")
     except Exception as e:
-        print(f"[Bond] akshare调用异常: {e}")
+        print(f"[Bond] 中债登接口请求失败: {e}")
 
     # 方式2：读取本地缓存
     try:
@@ -239,34 +268,31 @@ def fetch_bond_yield():
             data = json.load(f)
         y10 = float(data.get("y10", 1.725))
         date = data.get("date", DISPLAY_DATE)
-        print(f"[Bond] ⚠ akshare失败，回退到本地缓存: y10={y10}%, date={date}")
+        print(f"[Bond] ⚠ 中债登失败，回退到本地缓存: y10={y10}%, date={date}")
         return {"y10": y10, "date": date, "source": "本地缓存"}
     except Exception as e:
-        print(f"[Bond] WARN: akshare失败且缓存读取失败({e})，使用默认值1.725")
+        print(f"[Bond] WARN: 中债登失败且缓存读取失败({e})，使用默认值1.725")
         return {"y10": 1.725, "date": DISPLAY_DATE, "source": "默认回退值(非真实数据)"}
+
 
 # ===== Data Source 4: Bond Yield History (中债登) =====
 
 def fetch_bond_yield_history(valuation_dates):
     """
-    用 akshare 补全国债收益率历史，对齐估值日期。
+    用中债登官网接口补全国债收益率历史，对齐估值日期。
+    纯标准库实现，无需安装任何第三方依赖。
     valuation_dates: 估值历史中的日期列表
     返回: [{"date":..., "y10":..., "source":...}, ...]
     """
     try:
-        import akshare as ak
-        end_date = datetime.now().strftime("%Y%m%d")
-        start_date = (datetime.now() - timedelta(days=60)).strftime("%Y%m%d")
-        df = ak.bond_china_yield(start_date=start_date, end_date=end_date)
-        gov_df = df[df["曲线名称"] == "中债国债收益率曲线"].copy()
-        if gov_df.empty:
-            print("[BondHistory] akshare返回数据但无国债曲线行")
+        end_date = datetime.now().strftime("%Y-%m-%d")
+        start_date = (datetime.now() - timedelta(days=60)).strftime("%Y-%m-%d")
+        rows = _fetch_chinabond_yield_raw(start_date, end_date)
+        if not rows:
+            print("[BondHistory] 中债登接口返回数据但无国债曲线行")
             return []
 
-        bond_map = {}
-        for _, row in gov_df.iterrows():
-            d = str(row["日期"])[:10]
-            bond_map[d] = round(float(row["10年"]), 4)
+        bond_map = {r["date"]: r["y10"] for r in rows}
 
         result = []
         for d in valuation_dates:
@@ -277,10 +303,10 @@ def fetch_bond_yield_history(valuation_dates):
                     "source": "中央国债登记结算有限责任公司"
                 })
 
-        print(f"[BondHistory] akshare补全国债历史: {len(result)}/{len(valuation_dates)} 个日期匹配")
+        print(f"[BondHistory] 中债登补全国债历史: {len(result)}/{len(valuation_dates)} 个日期匹配")
         return result
     except Exception as e:
-        print(f"[BondHistory] akshare补全失败: {e}")
+        print(f"[BondHistory] 中债登补全失败: {e}")
         return []
 
 # ===== Data Source 5: Internal Feishu Records =====
@@ -956,7 +982,7 @@ def main():
         "bond_yield_history": {
             "china_10y": {
                 "name": "中国10年期国债收益率",
-                "source": f"中债登国债收益率曲线(akshare实时抓取)；{bond_date} 最新值",
+                "source": f"中债登国债收益率曲线(实时抓取)；{bond_date} 最新值",
                 "source_url": "https://yield.chinabond.com.cn/",
                 "data": bond_history
             }
